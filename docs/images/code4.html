@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ja"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed": "#d6e3ff",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-highest": "#e1e3e4",
+              "on-tertiary-fixed-variant": "#783100",
+              "secondary": "#4a5f83",
+              "secondary-fixed": "#d6e3ff",
+              "on-tertiary-container": "#ffd1bc",
+              "surface-dim": "#d9dadb",
+              "surface-variant": "#e1e3e4",
+              "on-error": "#ffffff",
+              "on-secondary-fixed-variant": "#324769",
+              "surface-container": "#edeeef",
+              "on-secondary-fixed": "#011b3c",
+              "on-surface-variant": "#424752",
+              "surface": "#f8f9fa",
+              "tertiary-fixed-dim": "#ffb691",
+              "primary": "#00488d",
+              "on-primary-fixed": "#001b3d",
+              "inverse-primary": "#a8c8ff",
+              "secondary-container": "#c0d5ff",
+              "outline-variant": "#c2c6d4",
+              "surface-tint": "#005db5",
+              "on-primary-fixed-variant": "#00468b",
+              "on-tertiary": "#ffffff",
+              "surface-container-high": "#e7e8e9",
+              "tertiary": "#7b3200",
+              "surface-bright": "#f8f9fa",
+              "tertiary-fixed": "#ffdbcb",
+              "inverse-surface": "#2e3132",
+              "primary-fixed-dim": "#a8c8ff",
+              "on-surface": "#191c1d",
+              "on-secondary": "#ffffff",
+              "on-primary": "#ffffff",
+              "on-secondary-container": "#475c7f",
+              "on-primary-container": "#cadcff",
+              "surface-container-low": "#f3f4f5",
+              "tertiary-container": "#a04401",
+              "inverse-on-surface": "#f0f1f2",
+              "outline": "#727783",
+              "error-container": "#ffdad6",
+              "on-error-container": "#93000a",
+              "error": "#ba1a1a",
+              "primary-container": "#005fb8",
+              "on-background": "#191c1d",
+              "secondary-fixed-dim": "#b2c7f0",
+              "on-tertiary-fixed": "#341100",
+              "background": "#f8f9fa"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body">
+<!-- TopAppBar Shell -->
+<header class="bg-[#f8f9fa]/80 backdrop-blur-xl sticky top-0 z-50 flex justify-between items-center px-6 h-16 w-full">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#005FB8]" data-icon="auto_awesome">auto_awesome</span>
+<h1 class="text-xl font-black text-[#005FB8] tracking-tight font-headline">The Insight Editorial</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-[#f3f4f5] transition-colors rounded-full text-slate-500">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="p-2 hover:bg-[#f3f4f5] transition-colors rounded-full text-slate-500 relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+</div>
+</header>
+<main class="max-w-2xl mx-auto px-6 py-8 pb-32">
+<!-- Editorial Header Section -->
+<section class="mb-12">
+<div class="flex flex-col gap-1">
+<span class="text-primary font-bold tracking-widest text-xs uppercase opacity-80">Timeline</span>
+<h2 class="text-3xl font-extrabold font-headline tracking-tight text-on-surface">解析履歴</h2>
+<p class="text-on-surface-variant text-sm mt-2 leading-relaxed">過去の戦略と成果のアーカイブ。ここから次のトレンドの芽を見つけましょう。</p>
+</div>
+</section>
+<!-- Search & Filter Area (Tonal Shift Background) -->
+<div class="bg-surface-container-low p-4 rounded-lg mb-8 flex items-center justify-between">
+<div class="flex gap-2">
+<button class="bg-surface-container-lowest px-4 py-2 rounded-full text-xs font-semibold text-primary shadow-sm">すべて</button>
+<button class="px-4 py-2 rounded-full text-xs font-semibold text-on-surface-variant hover:bg-surface-container-high transition-all">お気に入り</button>
+<button class="px-4 py-2 rounded-full text-xs font-semibold text-on-surface-variant hover:bg-surface-container-high transition-all">改善成功</button>
+</div>
+<button class="text-on-surface-variant p-2">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+</button>
+</div>
+<!-- History List (Card Base) -->
+<div class="space-y-6">
+<!-- Card 1 -->
+<article class="bg-surface-container-lowest rounded-xl p-6 transition-all hover:scale-[1.01] flex flex-col gap-4 relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Modern smartphone screen displaying colorful social media analytics charts and graphs with vibrant blue and purple accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxEHWvgt4WIikF4FHevZXTEHK3Ow-K7HSUeA61r_2yAWOMYT3O2rbo83TElBXAcb-wqznUXc3I8AOgL4KjBjCdZC7O2NkfwotlnAFUA-lEuqlP4lFaMYyfDLJcaIm-3-BaebiNdqAzDrhaJB8pTbOYWir6d3SKwLbBNqiLBf9vwBydGzE_GzGsiCkvvq6e7OIFiq0-DHKwz1NNpdaDIbAbcgR5hycJ6WKBhwOsSWbTbAjHhvKqFbtuIbKETgZTMr1UJbRfxeTUOkYD"/>
+</div>
+<div>
+<p class="text-[0.65rem] font-bold text-on-surface-variant/60 uppercase tracking-tighter">2023.11.24 — 14:20</p>
+<h3 class="font-headline font-bold text-lg text-on-surface leading-tight">リール投稿の初動分析</h3>
+</div>
+</div>
+<button class="text-primary transition-transform active:scale-90">
+<span class="material-symbols-outlined" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+</div>
+<div class="flex gap-4">
+<div class="w-24 h-32 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait oriented smartphone display showing a creative video editing interface with multiple timeline layers and colorful overlays" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLsYi6MAIlH-tfGBf9eY8eU0VEPT0EKa599ji-VhkIxTHq9KC_gT_j_zUMtSBBTM2n5uyKLDHoy2EqueoyptbUPZ5zmxhrrxo6_1PcCsGfMDaZ8nHOTLBaaren1hhypA3Qpq_Cz1qNAqe3-ihIjbtBDNa-lIYucTxFOhtL5IjGWKsijVuF9B6VQOTxgPSh4oa3sngMKh2s9Yc1tQZgP-b1XrwQ9Cs56mwO_84scl1dELPnKpS-NOAlmFU0qYGGdnjAcnOARB6w-D1x"/>
+</div>
+<div class="flex flex-col justify-between py-1">
+<div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-primary-fixed text-on-primary-fixed-variant mb-2">改善成功</span>
+<p class="text-on-surface-variant text-sm font-medium leading-relaxed">
+                                冒頭の3秒をテロップ重視に変更したことで、<span class="text-primary font-bold">保存数が急増しました</span>。離脱率が前週比15%低下。
+                            </p>
+</div>
+<div class="flex items-center gap-4 text-[10px] text-on-surface-variant/70 font-semibold">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs" data-icon="visibility">visibility</span> 4.2k</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs" data-icon="bookmark">bookmark</span> 312</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface-container-lowest rounded-xl p-6 transition-all hover:scale-[1.01] flex flex-col gap-4 relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Abstract colorful data visualization with soft glowing lines and dots on a clean white background minimalist style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC16LRccLz9lMxJXiBnKRxHgyGBsu7O1MhAOEfdz4CDAyPmSEi0YBc-8IoZOtQaj03qFAl-bA_1nFreNJjl-Xu732loPvVgtDMFwFM2LCwT5aAi3cNnKOiU5aZWo-5vaxtXkU8M6FdZFGPdZ3xYCylVGBiKaRepeRQn2fXkR1g0uNqHu7j6YD9GTkqAodTTdYL6FD0rLdkYHsMQDY-sz8LOWDtsGWqaqCUwW3S0rNlnrW_-QgNtG5_JFZVHVImucPQ1ni3eYVAKKJhZ"/>
+</div>
+<div>
+<p class="text-[0.65rem] font-bold text-on-surface-variant/60 uppercase tracking-tighter">2023.11.22 — 09:45</p>
+<h3 class="font-headline font-bold text-lg text-on-surface leading-tight">平日朝のフォロワー反応</h3>
+</div>
+</div>
+<button class="text-slate-300 transition-transform active:scale-90">
+<span class="material-symbols-outlined" data-icon="star">star</span>
+</button>
+</div>
+<div class="flex gap-4">
+<div class="w-24 h-32 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Digital marketing dashboard with clean typography and simple blue bar charts showing engagement growth" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEeydcLW3i3FGpJMrmj4es3lsAiER7nHbSgZugMpXoudlbrfDe0VJYgMvW4QDWcD9sHn09M3yRBiPhlBV782jtoT5q1dez5H5AEZkhpP5bZoHl6iyg4EU-GHjLV9qkydIXZi9quZi7em9ROfkurGruXLxN3Rb7yNV9VFHHm5A4S_9a0fxSFbAQ0f5RIAEywLYV1UTWw6c_7tpaROfyIii1wQ8uZA8yeuUfBAeWp1I527hQSLIvYSNLNUb9GvrBOD1amODXAaTFmUkR"/>
+</div>
+<div class="flex flex-col justify-between py-1">
+<div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-surface-container-high text-on-surface-variant mb-2">通常解析</span>
+<p class="text-on-surface-variant text-sm font-medium leading-relaxed">
+                                リンククリック率が想定より低めです。ストーリーズのスタンプ位置が押しにくい可能性を検討してください。
+                            </p>
+</div>
+<div class="flex items-center gap-4 text-[10px] text-on-surface-variant/70 font-semibold">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs" data-icon="touch_app">touch_app</span> 12</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs" data-icon="chat">chat</span> 4</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="bg-surface-container-lowest rounded-xl p-6 transition-all hover:scale-[1.01] flex flex-col gap-4 relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Modern office interior with soft natural light hitting a laptop screen showing clean UI design and graphs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhWFzPaR1dc__iqJzEF4nX-qqIppBrQLTl0JYU1-Kdj0M-wnBB1BKezdaP53Tgs2d1As7aqZVCNceF2Dz0LYdmx3GNziIkxVQluDcmr4UatqL_XKo80L_OsUWWTynU4eilLeaEEhN8aWSbJV50yJAl2QCU7Z8szB2E0w4mYxGE9vnieVcScma4vM7ilLtLfqTDitsyr136yC7xRadJoUZY-gfQqsIDUkV2ZInUgJop28DWWm2kDSEmb3wMz6hNEQ92OhibPVAk_fJi"/>
+</div>
+<div>
+<p class="text-[0.65rem] font-bold text-on-surface-variant/60 uppercase tracking-tighter">2023.11.20 — 21:10</p>
+<h3 class="font-headline font-bold text-lg text-on-surface leading-tight">Q4戦略マイルストーン</h3>
+</div>
+</div>
+<button class="text-primary transition-transform active:scale-90">
+<span class="material-symbols-outlined" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+</div>
+<div class="flex gap-4">
+<div class="w-24 h-32 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Strategic planning session on a whiteboard with colorful sticky notes and clean minimalist icons" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxk5EKIg1pXyLVjoMhBlDXP5khEaNyhS4thqWjjgDmAEBPwFLbOv0-a6T3hBxnyEvc-jcA8I3GoUZOLjCsde3kB3fA7M1vJ5IomV3Bwp2cRprq9wW8ewAzGN-LKVvLPnwvh5zOElNhgP67Ndlnmg_5KIOqnyxkbvkEQS6iipH6Yma30uwdrLZZQ35Kw8J0sa9xtYOOHWpx0rwdTomTgmqlk8Mj1bItltBGz0BfnlSP0HwCstlmJVIZIZnpcC3zBwwt1bSOWSSTzNzW"/>
+</div>
+<div class="flex flex-col justify-between py-1">
+<div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-primary-fixed text-on-primary-fixed-variant mb-2">改善成功</span>
+<p class="text-on-surface-variant text-sm font-medium leading-relaxed">
+                                ターゲット層が20代から30代へシフト。コンテンツのトーンを<span class="text-primary font-bold">よりミニマルで知的な表現</span>に調整しました。
+                            </p>
+</div>
+<div class="flex items-center gap-4 text-[10px] text-on-surface-variant/70 font-semibold">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs" data-icon="group">group</span> +450</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs" data-icon="share">share</span> 56</span>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Pagination / Load More (Tonal Shift) -->
+<div class="mt-12 flex justify-center">
+<button class="px-8 py-3 bg-surface-container-low text-on-surface font-bold text-sm rounded-full hover:bg-surface-container-high transition-all active:scale-95">
+                さらに読み込む
+            </button>
+</div>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-8 pb-6 pt-2 bg-[#ffffff]/80 backdrop-blur-xl rounded-t-[3rem] shadow-[0_-12px_32px_rgba(0,72,141,0.08)]">
+<a class="flex flex-col items-center justify-center text-slate-400 p-2 hover:text-[#005FB8] transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Inter'] text-xs font-semibold">ホーム</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#00488d] to-[#005fb8] text-white rounded-full w-16 h-16 -mt-8 shadow-lg shadow-[#00488d]/30 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-['Inter'] text-[10px] font-bold">履歴</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 p-2 hover:text-[#005FB8] transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Inter'] text-xs font-semibold">設定</span>
+</a>
+</nav>
+</body></html>
