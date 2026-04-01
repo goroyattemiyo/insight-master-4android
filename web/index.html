@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InsightMasterforAndroid</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-soft: #eef4ff;
+      --text: #142033;
+      --muted: #61708a;
+      --primary: #2f6bff;
+      --primary-dark: #2157d8;
+      --border: #d9e3f7;
+      --success: #1f9d61;
+      --danger: #c53d3d;
+      --shadow: 0 16px 40px rgba(28, 53, 107, 0.12);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f7f9fd 0%, #eef4ff 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 24px 20px 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--primary-dark);
+      letter-spacing: -0.02em;
+    }
+
+    .brand-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), #7ca4ff);
+      color: white;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 22px rgba(47, 107, 255, 0.28);
+      font-size: 18px;
+    }
+
+    .hero {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: var(--shadow);
+      border-radius: 32px;
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      color: var(--primary);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--primary-dark);
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 10px 28px rgba(25, 43, 84, 0.08);
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+
+    .card-title {
+      margin: 0 0 10px;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .card-text {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .primary-button {
+      width: 100%;
+      border: none;
+      border-radius: 20px;
+      padding: 18px 20px;
+      background: linear-gradient(135deg, var(--primary) 0%, #4d86ff 100%);
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      box-shadow: 0 18px 30px rgba(47, 107, 255, 0.26);
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .primary-button:active {
+      transform: translateY(1px) scale(0.995);
+      box-shadow: 0 10px 20px rgba(47, 107, 255, 0.2);
+    }
+
+    .helper {
+      margin-top: 12px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .status {
+      margin-top: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      min-height: 20px;
+    }
+
+    .status.ok { color: var(--success); }
+    .status.error { color: var(--danger); }
+
+    .preview {
+      display: none;
+      gap: 14px;
+      align-items: flex-start;
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 18px;
+      background: #f8fbff;
+      border: 1px solid var(--border);
+    }
+
+    .preview.active { display: flex; }
+
+    .preview img {
+      width: 92px;
+      height: 92px;
+      border-radius: 18px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      background: white;
+      flex-shrink: 0;
+    }
+
+    .preview-meta {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .preview-name {
+      font-size: 14px;
+      font-weight: 800;
+      word-break: break-all;
+    }
+
+    .preview-info {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .next-button {
+      width: 100%;
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 15px 16px;
+      background: white;
+      color: var(--primary-dark);
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .next-button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      width: min(440px, calc(100vw - 20px));
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      padding: 10px 18px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 12px 30px rgba(23, 41, 80, 0.12);
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+
+    .nav-item {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .nav-item.active {
+      color: var(--primary-dark);
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="brand">
+      <div class="brand-badge">✦</div>
+      <div>InsightMasterforAndroid</div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">SCREENSHOT ANALYSIS</div>
+      <h1>スクショ1枚で、<br>数字の意味がわかる。</h1>
+      <p class="lead">
+        SNSインサイト画面のスクリーンショットを選ぶだけで、
+        主要指標を読み取り、やさしい言葉で次の一手まで整理します。
+      </p>
+      <div class="chips">
+        <span class="chip">Threads</span>
+        <span class="chip">Instagram</span>
+        <span class="chip">X</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">最初の一歩</h2>
+      <p class="card-text">まずは、分析したいインサイト画面のスクリーンショットを選んでください。設定は不要です。</p>
+
+      <input id="fileInput" type="file" accept="image/png,image/jpeg,image/jpg" hidden />
+      <button id="pickButton" class="primary-button" type="button">スクショを選択</button>
+      <div class="helper">PNG / JPG / JPEG に対応。初期版では1回につき1枚だけ選べます。</div>
+      <div id="status" class="status"></div>
+
+      <div id="preview" class="preview">
+        <img id="previewImage" alt="選択したスクリーンショットのプレビュー" />
+        <div class="preview-meta">
+          <div id="previewName" class="preview-name"></div>
+          <div id="previewInfo" class="preview-info"></div>
+        </div>
+      </div>
+
+      <button id="nextButton" class="next-button" type="button" disabled>SNS選択へ進む</button>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="メインナビゲーション">
+    <div class="nav-item active">ホーム</div>
+    <div class="nav-item">履歴</div>
+    <div class="nav-item">設定</div>
+  </nav>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const pickButton = document.getElementById('pickButton');
+    const status = document.getElementById('status');
+    const preview = document.getElementById('preview');
+    const previewImage = document.getElementById('previewImage');
+    const previewName = document.getElementById('previewName');
+    const previewInfo = document.getElementById('previewInfo');
+    const nextButton = document.getElementById('nextButton');
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    function resetState() {
+      status.textContent = '';
+      status.className = 'status';
+      preview.classList.remove('active');
+      nextButton.disabled = true;
+    }
+
+    function showError(message) {
+      status.textContent = message;
+      status.className = 'status error';
+      preview.classList.remove('active');
+      nextButton.disabled = true;
+    }
+
+    function showSuccess(message) {
+      status.textContent = message;
+      status.className = 'status ok';
+    }
+
+    pickButton.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) {
+        resetState();
+        return;
+      }
+
+      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+      if (!allowedTypes.includes(file.type)) {
+        showError('画像形式は PNG / JPG / JPEG のみ対応です。');
+        fileInput.value = '';
+        return;
+      }
+
+      const imageUrl = URL.createObjectURL(file);
+      previewImage.src = imageUrl;
+      previewName.textContent = file.name;
+      previewInfo.textContent = `${file.type.replace('image/', '').toUpperCase()} ・ ${formatBytes(file.size)}`;
+      preview.classList.add('active');
+      nextButton.disabled = false;
+      showSuccess('スクリーンショットを選択しました。次へ進めます。');
+    });
+
+    nextButton.addEventListener('click', () => {
+      alert('次のステップでは SNS 選択UI を実装します。');
+    });
+  </script>
+</body>
+</html>
