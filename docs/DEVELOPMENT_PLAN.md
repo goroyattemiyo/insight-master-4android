@@ -1,17 +1,19 @@
-# DEVELOPMENT PLAN
+﻿# DEVELOPMENT PLAN
 
 ## 現在フェーズ
 MVP設計完了 → 実装準備
 
 ## 直近タスク
-- [ ] プロジェクト構成作成（web / android）
-- [ ] スクショ選択機能
-- [ ] SNS選択UI
-- [ ] OCR基盤選定
-- [ ] 数値抽出ロジック（Threads優先）
-- [ ] 結果画面UI（結論/良い点/弱い点/次の一手）
-- [ ] 数値修正UI
-- [ ] 履歴保存
+- [x] プロジェクト構成作成（web / android）
+- [x] スクショ選択機能
+- [x] SNS選択UI
+- [x] OCR基盤選定（Tesseract.js / jpnモード / PSM6）
+- [x] 数値抽出ロジック（Threads優先・次行対応）
+- [x] 結果画面UI（結論/良い点/弱い点/次の一手）
+- [x] 数値修正UI
+- [x] 履歴保存（localStorage・履歴画面追加）
+- [x] HTMLページ遷移をつなぐ
+      index.html → sns-select.html → ocr-extract.html → analysis-result.html
 
 ## Next Steps
 1. Threads用テンプレート作成
