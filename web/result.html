@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>分析結果 | InsightMasterSnap</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-soft: #eef4ff;
+      --text: #142033;
+      --muted: #61708a;
+      --primary: #2f6bff;
+      --primary-dark: #2157d8;
+      --border: #d9e3f7;
+      --success: #1f9d61;
+      --danger: #c53d3d;
+      --shadow: 0 16px 40px rgba(28, 53, 107, 0.12);
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f7f9fd 0%, #eef4ff 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .app {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 24px 20px 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--primary-dark);
+      font-weight: 800;
+    }
+    .back {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.92);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: var(--primary-dark);
+      text-decoration: none;
+      font-size: 20px;
+    }
+    .card {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    /* ローディング */
+    .loading-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 40px 0;
+    }
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    /* 結果 */
+    .summary-card {
+      background: linear-gradient(135deg, var(--primary) 0%, #4d86ff 100%);
+      border-radius: 24px;
+      padding: 20px;
+      color: white;
+    }
+    .summary-label {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      opacity: 0.8;
+      margin-bottom: 8px;
+    }
+    .summary-text {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.5;
+      letter-spacing: -0.02em;
+    }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .metric-item {
+      background: #f8fbff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .metric-label {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .metric-value {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .bullet-list {
+      margin: 0;
+      padding-left: 18px;
+      line-height: 1.9;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .bullet-list li { margin-bottom: 2px; }
+    .error-wrap {
+      text-align: center;
+      padding: 32px 0;
+      color: var(--danger);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+    .retry-button {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 15px;
+      background: white;
+      color: var(--primary-dark);
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+    .sns-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 12px;
+      margin-bottom: 12px;
+    }
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      width: min(440px, calc(100vw - 20px));
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      padding: 10px 18px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 12px 30px rgba(23, 41, 80, 0.12);
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+    .nav-item { text-align: center; font-size: 12px; color: var(--muted); font-weight: 700; text-decoration: none; }
+    .nav-item.active { color: var(--primary-dark); }
+    @media (max-width: 400px) {
+      .metric-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="topbar">
+      <a class="back" href="./index.html">‹</a>
+      <div>InsightMasterSnap</div>
+    </div>
+
+    <div id="loadingSection" class="card">
+      <div class="loading-wrap">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">AIが画像を解析中です…</div>
+      </div>
+    </div>
+
+    <div id="resultSection" style="display:none; display:flex; flex-direction:column; gap:18px;">
+      <div class="card">
+        <div class="eyebrow">ANALYSIS RESULT</div>
+        <div id="snsBadge" class="sns-badge"></div>
+        <div class="summary-card">
+          <div class="summary-label">結論</div>
+          <div id="summary" class="summary-text"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">主要数値</h2>
+        <div id="metricGrid" class="metric-grid"></div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">良い点</h2>
+        <ul id="strengths" class="bullet-list"></ul>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">弱い点</h2>
+        <ul id="weaknesses" class="bullet-list"></ul>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">次の一手</h2>
+        <ul id="actions" class="bullet-list"></ul>
+      </div>
+    </div>
+
+    <div id="errorSection" style="display:none;" class="card">
+      <div class="error-wrap" id="errorText"></div>
+      <button class="retry-button" onclick="window.location.href='./index.html'">もう一度試す</button>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="./index.html">ホーム</a>
+    <a class="nav-item" href="./history.html">履歴</a>
+    <a class="nav-item" href="./settings.html">設定</a>
+  </nav>
+
+  <script>
+    const loadingSection = document.getElementById('loadingSection');
+    const loadingText = document.getElementById('loadingText');
+    const resultSection = document.getElementById('resultSection');
+    const errorSection = document.getElementById('errorSection');
+    const errorText = document.getElementById('errorText');
+
+    const METRIC_LABELS = {
+      views: '表示回数', reach: 'リーチ', impressions: 'インプレッション',
+      likes: 'いいね', replies: '返信', reposts: 'リポスト',
+      quotes: '引用', shares: 'シェア', bookmarks: '保存',
+      interactions: 'インタラクション', follows: 'フォロワー',
+      profileVisits: 'プロフィール', linkClicks: 'リンク'
+    };
+
+    function showError(msg) {
+      loadingSection.style.display = 'none';
+      resultSection.style.display = 'none';
+      errorSection.style.display = 'block';
+      errorText.textContent = msg;
+    }
+
+    function showResult(data, sns) {
+      loadingSection.style.display = 'none';
+      errorSection.style.display = 'none';
+      resultSection.style.display = 'flex';
+
+      document.getElementById('snsBadge').textContent = sns;
+      document.getElementById('summary').textContent = data.analysis?.summary || '分析結果がありません。';
+
+      // 主要数値（nullでない上位6件）
+      const metrics = data.metrics || {};
+      const entries = Object.entries(metrics)
+        .filter(([, v]) => v !== null && v > 0)
+        .slice(0, 6);
+      document.getElementById('metricGrid').innerHTML = entries.map(([key, val]) => `
+        <div class="metric-item">
+          <div class="metric-label">${METRIC_LABELS[key] || key}</div>
+          <div class="metric-value">${Number(val).toLocaleString('ja-JP')}</div>
+        </div>
+      `).join('');
+
+      const renderList = (id, items) => {
+        document.getElementById(id).innerHTML = (items || []).map(i => `<li>${i}</li>`).join('');
+      };
+      renderList('strengths', data.analysis?.strengths);
+      renderList('weaknesses', data.analysis?.weaknesses);
+      renderList('actions', data.analysis?.actions);
+
+      // 履歴保存
+      const history = JSON.parse(localStorage.getItem('analysisHistory') || '[]');
+      history.unshift({
+        id: Date.now(),
+        date: new Date().toLocaleString('ja-JP'),
+        sns,
+        summary: data.analysis?.summary || '',
+        engagementRate: '—',
+        views: metrics.views || metrics.reach || metrics.impressions || 0,
+        likes: metrics.likes || metrics.interactions || 0
+      });
+      if (history.length > 50) history.pop();
+      localStorage.setItem('analysisHistory', JSON.stringify(history));
+    }
+
+    async function analyze() {
+      const base64 = sessionStorage.getItem('pendingImage');
+      const mimeType = sessionStorage.getItem('pendingMime');
+      const sns = sessionStorage.getItem('pendingSns');
+
+      if (!base64 || !sns) {
+        showError('画像またはSNS情報がありません。\nホームに戻ってやり直してください。');
+        return;
+      }
+
+      const messages = [
+        'AIが画像を解析中です…',
+        '数値を読み取っています…',
+        '分析を生成しています…'
+      ];
+      let i = 0;
+      const timer = setInterval(() => {
+        i = (i + 1) % messages.length;
+        loadingText.textContent = messages[i];
+      }, 1800);
+
+      try {
+        const res = await fetch('/api/gemini', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageBase64: base64, mimeType, sns })
+        });
+
+        clearInterval(timer);
+
+        if (!res.ok) {
+          const err = await res.json();
+          showError(`エラーが発生しました。\n${err.error || 'もう一度お試しください。'}`);
+          return;
+        }
+
+        const data = await res.json();
+        showResult(data, sns);
+
+        // セッションデータをクリア
+        sessionStorage.removeItem('pendingImage');
+        sessionStorage.removeItem('pendingMime');
+        sessionStorage.removeItem('pendingSns');
+        sessionStorage.removeItem('pendingName');
+
+      } catch (e) {
+        clearInterval(timer);
+        showError('通信エラーが発生しました。\nネットワークを確認してもう一度お試しください。');
+      }
+    }
+
+    analyze();
+  </script>
+</body>
+</html>

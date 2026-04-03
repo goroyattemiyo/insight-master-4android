@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
@@ -19,9 +19,7 @@
       --shadow: 0 16px 40px rgba(28, 53, 107, 0.12);
       --radius: 24px;
     }
-
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -29,7 +27,6 @@
       color: var(--text);
       min-height: 100vh;
     }
-
     .app {
       width: 100%;
       max-width: 480px;
@@ -38,9 +35,8 @@
       padding: 24px 20px 120px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 20px;
     }
-
     .brand {
       display: flex;
       align-items: center;
@@ -50,7 +46,6 @@
       color: var(--primary-dark);
       letter-spacing: -0.02em;
     }
-
     .brand-badge {
       width: 36px;
       height: 36px;
@@ -62,7 +57,6 @@
       box-shadow: 0 10px 22px rgba(47, 107, 255, 0.28);
       font-size: 18px;
     }
-
     .hero {
       background: var(--surface);
       border: 1px solid rgba(255,255,255,0.7);
@@ -73,172 +67,148 @@
       flex-direction: column;
       gap: 16px;
     }
-
     .eyebrow {
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.14em;
       color: var(--primary);
     }
-
     h1 {
       margin: 0;
-      font-size: 34px;
-      line-height: 1.08;
+      font-size: 30px;
+      line-height: 1.1;
       letter-spacing: -0.04em;
     }
-
     .lead {
       margin: 0;
       color: var(--muted);
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.7;
     }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .chip {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: var(--surface-soft);
-      color: var(--primary-dark);
-      font-size: 13px;
-      font-weight: 700;
-      border: 1px solid var(--border);
-    }
-
     .card {
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.88);
       border-radius: var(--radius);
       padding: 20px;
       box-shadow: 0 10px 28px rgba(25, 43, 84, 0.08);
       border: 1px solid rgba(255,255,255,0.8);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
-
     .card-title {
-      margin: 0 0 10px;
-      font-size: 18px;
+      margin: 0;
+      font-size: 17px;
       font-weight: 800;
       letter-spacing: -0.02em;
     }
-
-    .card-text {
-      margin: 0;
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.7;
+    .sns-list {
+      display: grid;
+      gap: 10px;
     }
-
-    .primary-button {
+    .sns-option {
       width: 100%;
-      border: none;
-      border-radius: 20px;
-      padding: 18px 20px;
-      background: linear-gradient(135deg, var(--primary) 0%, #4d86ff 100%);
-      color: white;
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px;
       cursor: pointer;
-      box-shadow: 0 18px 30px rgba(47, 107, 255, 0.26);
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
-
-    .primary-button:active {
-      transform: translateY(1px) scale(0.995);
-      box-shadow: 0 10px 20px rgba(47, 107, 255, 0.2);
+    .sns-option.selected {
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(47, 107, 255, 0.14);
+      background: #f8fbff;
     }
-
-    .helper {
-      margin-top: 12px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
+    .sns-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: var(--surface-soft);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      flex-shrink: 0;
     }
-
-    .status {
-      margin-top: 14px;
-      font-size: 13px;
-      font-weight: 700;
-      min-height: 20px;
+    .sns-name { font-size: 16px; font-weight: 800; }
+    .sns-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .radio-mark {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 2px solid #b9c8ea;
+      margin-left: auto;
+      flex-shrink: 0;
+      position: relative;
     }
-
-    .status.ok { color: var(--success); }
-    .status.error { color: var(--danger); }
-
+    .sns-option.selected .radio-mark { border-color: var(--primary); }
+    .sns-option.selected .radio-mark::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
     .preview {
       display: none;
-      gap: 14px;
+      gap: 12px;
       align-items: flex-start;
-      margin-top: 16px;
-      padding: 14px;
-      border-radius: 18px;
+      padding: 12px;
+      border-radius: 16px;
       background: #f8fbff;
       border: 1px solid var(--border);
     }
-
     .preview.active { display: flex; }
-
     .preview img {
-      width: 92px;
-      height: 92px;
-      border-radius: 18px;
+      width: 80px;
+      height: 80px;
+      border-radius: 14px;
       object-fit: cover;
       border: 1px solid var(--border);
-      background: white;
       flex-shrink: 0;
     }
-
-    .preview-meta {
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .preview-name {
-      font-size: 14px;
-      font-weight: 800;
-      word-break: break-all;
-    }
-
-    .preview-info {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .next-button {
+    .preview-name { font-size: 13px; font-weight: 800; word-break: break-all; }
+    .preview-info { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .primary-button {
       width: 100%;
-      margin-top: 14px;
+      border: none;
+      border-radius: 18px;
+      padding: 17px 20px;
+      background: linear-gradient(135deg, var(--primary) 0%, #4d86ff 100%);
+      color: white;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 16px 28px rgba(47, 107, 255, 0.26);
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+    .primary-button:active { transform: translateY(1px); }
+    .primary-button:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+    .secondary-button {
+      width: 100%;
       border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 15px 16px;
+      padding: 15px 18px;
       background: white;
       color: var(--primary-dark);
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       cursor: pointer;
     }
-
-    .next-button:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
+    .status { font-size: 13px; font-weight: 700; min-height: 18px; }
+    .status.ok { color: var(--success); }
+    .status.error { color: var(--danger); }
+    .helper { font-size: 12px; color: var(--muted); line-height: 1.6; }
     .bottom-nav {
       position: fixed;
       left: 50%;
       bottom: 14px;
       transform: translateX(-50%);
       width: min(440px, calc(100vw - 20px));
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(14px);
       border-radius: 28px;
       padding: 10px 18px;
@@ -247,17 +217,8 @@
       box-shadow: 0 12px 30px rgba(23, 41, 80, 0.12);
       border: 1px solid rgba(255,255,255,0.8);
     }
-
-    .nav-item {
-      text-align: center;
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .nav-item.active {
-      color: var(--primary-dark);
-    }
+    .nav-item { text-align: center; font-size: 12px; color: var(--muted); font-weight: 700; text-decoration: none; }
+    .nav-item.active { color: var(--primary-dark); }
   </style>
 </head>
 <body>
@@ -270,115 +231,131 @@
     <section class="hero">
       <div class="eyebrow">SCREENSHOT ANALYSIS</div>
       <h1>スクショ1枚で、<br>数字の意味がわかる。</h1>
-      <p class="lead">
-        SNSインサイト画面のスクリーンショットを選ぶだけで、
-        主要指標を読み取り、やさしい言葉で次の一手まで整理します。
-      </p>
-      <div class="chips">
-        <span class="chip">Threads</span>
-        <span class="chip">Instagram</span>
-        <span class="chip">X</span>
+      <p class="lead">インサイト画面のスクリーンショットを選んでSNSを指定するだけ。AIが数値を読み取り、次の一手まで整理します。</p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">1. SNSを選択</h2>
+      <div class="sns-list" id="snsList">
+        <button class="sns-option" type="button" data-sns="Threads">
+          <div class="sns-icon">＠</div>
+          <div>
+            <div class="sns-name">Threads</div>
+            <div class="sns-desc">テキスト投稿のインサイト画面向け</div>
+          </div>
+          <div class="radio-mark"></div>
+        </button>
+        <button class="sns-option" type="button" data-sns="Instagram">
+          <div class="sns-icon">◉</div>
+          <div>
+            <div class="sns-name">Instagram</div>
+            <div class="sns-desc">投稿・リール・アカウント概要向け</div>
+          </div>
+          <div class="radio-mark"></div>
+        </button>
+        <button class="sns-option" type="button" data-sns="X">
+          <div class="sns-icon">𝕏</div>
+          <div>
+            <div class="sns-name">X</div>
+            <div class="sns-desc">ポスト・アカウント分析向け</div>
+          </div>
+          <div class="radio-mark"></div>
+        </button>
       </div>
     </section>
 
     <section class="card">
-      <h2 class="card-title">最初の一歩</h2>
-      <p class="card-text">まずは、分析したいインサイト画面のスクリーンショットを選んでください。設定は不要です。</p>
-
+      <h2 class="card-title">2. スクショを選択</h2>
       <input id="fileInput" type="file" accept="image/png,image/jpeg,image/jpg" hidden />
-      <button id="pickButton" class="primary-button" type="button">スクショを選択</button>
-      <div class="helper">PNG / JPG / JPEG に対応。初期版では1回につき1枚だけ選べます。</div>
-      <div id="status" class="status"></div>
-
+      <button id="pickButton" class="secondary-button" type="button">画像を選択する</button>
       <div id="preview" class="preview">
-        <img id="previewImage" alt="選択したスクリーンショットのプレビュー" />
-        <div class="preview-meta">
+        <img id="previewImage" alt="プレビュー" />
+        <div>
           <div id="previewName" class="preview-name"></div>
           <div id="previewInfo" class="preview-info"></div>
         </div>
       </div>
+      <div id="pickStatus" class="status"></div>
+    </section>
 
-      <button id="nextButton" class="next-button" type="button" disabled>SNS選択へ進む</button>
+    <section class="card">
+      <button id="analyzeButton" class="primary-button" type="button" disabled>AIで分析する</button>
+      <div class="helper" style="text-align:center;">Gemini AIがOCR・数値抽出・分析を一括で行います</div>
     </section>
   </main>
 
-  <nav class="bottom-nav" aria-label="メインナビゲーション">
-    <div class="nav-item active">ホーム</div>
-    <a class="nav-item" href="./history.html" style="text-decoration:none;">履歴</a>
-    <div class="nav-item">設定</div>
+  <nav class="bottom-nav">
+    <a class="nav-item active" href="./index.html">ホーム</a>
+    <a class="nav-item" href="./history.html">履歴</a>
+    <a class="nav-item" href="./settings.html">設定</a>
   </nav>
 
   <script>
     const fileInput = document.getElementById('fileInput');
     const pickButton = document.getElementById('pickButton');
-    const status = document.getElementById('status');
     const preview = document.getElementById('preview');
     const previewImage = document.getElementById('previewImage');
     const previewName = document.getElementById('previewName');
     const previewInfo = document.getElementById('previewInfo');
-    const nextButton = document.getElementById('nextButton');
+    const pickStatus = document.getElementById('pickStatus');
+    const analyzeButton = document.getElementById('analyzeButton');
+    const snsOptions = Array.from(document.querySelectorAll('.sns-option'));
 
-    function formatBytes(bytes) {
-      if (bytes < 1024) return bytes + ' B';
-      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    let selectedSns = '';
+    let selectedFile = null;
+
+    function formatBytes(b) {
+      if (b < 1024) return b + ' B';
+      if (b < 1024 * 1024) return (b / 1024).toFixed(1) + ' KB';
+      return (b / (1024 * 1024)).toFixed(1) + ' MB';
     }
 
-    function resetState() {
-      status.textContent = '';
-      status.className = 'status';
-      preview.classList.remove('active');
-      nextButton.disabled = true;
+    function updateAnalyzeButton() {
+      analyzeButton.disabled = !(selectedSns && selectedFile);
     }
 
-    function showError(message) {
-      status.textContent = message;
-      status.className = 'status error';
-      preview.classList.remove('active');
-      nextButton.disabled = true;
-    }
-
-    function showSuccess(message) {
-      status.textContent = message;
-      status.className = 'status ok';
-    }
-
-    pickButton.addEventListener('click', () => {
-      fileInput.click();
+    snsOptions.forEach(opt => {
+      opt.addEventListener('click', () => {
+        snsOptions.forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        selectedSns = opt.dataset.sns;
+        updateAnalyzeButton();
+      });
     });
 
-    fileInput.addEventListener('change', (event) => {
-      const file = event.target.files && event.target.files[0];
-      if (!file) {
-        resetState();
+    pickButton.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      if (!['image/png','image/jpeg','image/jpg'].includes(file.type)) {
+        pickStatus.textContent = 'PNG / JPG のみ対応です。';
+        pickStatus.className = 'status error';
         return;
       }
-
-      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-      if (!allowedTypes.includes(file.type)) {
-        showError('画像形式は PNG / JPG / JPEG のみ対応です。');
-        fileInput.value = '';
-        return;
-      }
-
-      const imageUrl = URL.createObjectURL(file);
-      previewImage.src = imageUrl;
+      selectedFile = file;
+      previewImage.src = URL.createObjectURL(file);
       previewName.textContent = file.name;
-      previewInfo.textContent = `${file.type.replace('image/', '').toUpperCase()} ・ ${formatBytes(file.size)}`;
+      previewInfo.textContent = `${file.type.replace('image/','').toUpperCase()} · ${formatBytes(file.size)}`;
       preview.classList.add('active');
-      nextButton.disabled = false;
-      showSuccess('スクリーンショットを選択しました。次へ進めます。');
+      pickStatus.textContent = '画像を選択しました。';
+      pickStatus.className = 'status ok';
+      updateAnalyzeButton();
     });
 
-    nextButton.addEventListener('click', () => {
-      const file = fileInput.files[0];
+    analyzeButton.addEventListener('click', () => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        sessionStorage.setItem('screenshotData', e.target.result);
-        sessionStorage.setItem('screenshotName', file.name);
-        window.location.href = './sns-select.html';
+        const dataUrl = e.target.result;
+        const base64 = dataUrl.split(',')[1];
+        const mimeType = selectedFile.type;
+        sessionStorage.setItem('pendingImage', base64);
+        sessionStorage.setItem('pendingMime', mimeType);
+        sessionStorage.setItem('pendingSns', selectedSns);
+        sessionStorage.setItem('pendingName', selectedFile.name);
+        window.location.href = './result.html';
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(selectedFile);
     });
   </script>
 </body>

@@ -10,7 +10,7 @@
 - 設定不要の安心感を与える
 
 ## 表示要素
-- ブランド名: InsightMasterforAndroid
+- ブランド名: InsightMasterSnap
 - キャッチコピー
 - メイン見出し
 - 説明文
