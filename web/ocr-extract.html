@@ -327,6 +327,8 @@
 
     const FIELD_LABELS = {
       views: '表示回数 / 閲覧数',
+      reach: 'リーチ（実ユーザー数）',
+      impressions: 'インプレッション',
       likes: 'いいね',
       replies: '返信 / コメント',
       reposts: 'リポスト / 再投稿',
@@ -414,27 +416,38 @@
 
     function parseInstagram(text) {
       return {
-        views: extractByKeywords(text, ['リーチ', 'reach', '閲覧', 'view', 'views']),
+        // リーチ（実ユーザー数）を優先、閲覧数はアカウント概要画面用
+        reach: extractByKeywords(text, ['リーチしたアカウント', 'リーチ', 'reach']),
+        impressions: extractByKeywords(text, ['インプレッション', 'impression', 'impressions']),
+        views: extractByKeywords(text, ['閲覧数', '閲覧', 'view', 'views']),
+        // 「いいね！」の数 → いいね で拾える
         likes: extractByKeywords(text, ['いいね', 'like', 'likes']),
-        replies: extractByKeywords(text, ['コメント', 'comment', 'comments', '返信']),
-        shares: extractByKeywords(text, ['シェア', 'share', 'shares']),
-        bookmarks: extractByKeywords(text, ['保存', 'save', 'saves', 'bookmark']),
-        profileVisits: extractByKeywords(text, ['プロフィール', 'profile']),
-        follows: extractByKeywords(text, ['フォロー', 'follows', 'followers']),
-        linkClicks: extractByKeywords(text, ['リンク', 'click', 'website'])
+        // コメント数・返信
+        replies: extractByKeywords(text, ['コメント数', 'コメント', 'comment', 'comments', '返信']),
+        // シェア数（--の場合はnullになりnumberValueが0を返す）
+        shares: extractByKeywords(text, ['シェア数', 'シェア', 'share', 'shares']),
+        // 保存数
+        bookmarks: extractByKeywords(text, ['保存数', '保存', 'save', 'saves', 'bookmark']),
+        interactions: extractByKeywords(text, ['インタラクション', 'interaction', 'interactions']),
+        profileVisits: extractByKeywords(text, ['プロフィールへのアクセス', 'プロフィール', 'profile']),
+        follows: extractByKeywords(text, ['フォロー数', 'フォロー', 'follows', 'followers']),
+        linkClicks: extractByKeywords(text, ['外部リンクのタップ', 'リンク', 'click', 'website'])
       };
     }
 
     function parseX(text) {
       return {
-        views: extractByKeywords(text, ['表示', 'impression', 'impressions', 'view', 'views']),
+        // インプレッション優先（日英両対応）
+        views: extractByKeywords(text, ['インプレッション', 'impression', 'impressions', '表示', 'view', 'views']),
+        // エンゲージメント合計（フォールバック用）
+        interactions: extractByKeywords(text, ['エンゲージメント', 'engagement', 'engagements']),
         likes: extractByKeywords(text, ['いいね', 'like', 'likes']),
         replies: extractByKeywords(text, ['返信', 'reply', 'replies']),
         reposts: extractByKeywords(text, ['リポスト', 'repost', 'reposts']),
         bookmarks: extractByKeywords(text, ['ブックマーク', 'bookmark', 'bookmarks', '保存']),
-        profileVisits: extractByKeywords(text, ['プロフィール', 'profile']),
-        follows: extractByKeywords(text, ['フォロー', 'follows', 'followers']),
-        linkClicks: extractByKeywords(text, ['リンク', 'url', 'click', 'clicks'])
+        profileVisits: extractByKeywords(text, ['プロフィールへのアクセス', 'プロフィール', 'profile visit', 'profile']),
+        follows: extractByKeywords(text, ['フォロー', 'follow', 'follows']),
+        linkClicks: extractByKeywords(text, ['リンクのクリック', 'リンク', 'link click', 'url click', 'click'])
       };
     }
 

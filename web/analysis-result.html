@@ -308,19 +308,23 @@
 
     const FIELD_DEFS = {
       Threads: ['views', 'interactions', 'likes', 'replies', 'reposts', 'quotes'],
-      Instagram: ['views', 'likes', 'replies', 'shares', 'bookmarks'],
-      X: ['views', 'likes', 'replies', 'reposts', 'bookmarks']
+      Instagram: ['reach', 'impressions', 'likes', 'replies', 'shares', 'bookmarks', 'interactions', 'profileVisits', 'follows'],
+      X: ['views', 'interactions', 'likes', 'replies', 'reposts', 'bookmarks', 'profileVisits', 'follows']
     };
 
     const LABELS = {
       views: '表示回数',
+      reach: 'リーチ',
+      impressions: 'インプレッション',
       interactions: 'インタラクション合計',
       likes: 'いいね',
       replies: '返信',
       reposts: 'リポスト',
       quotes: '引用',
       shares: 'シェア',
-      bookmarks: '保存'
+      bookmarks: '保存',
+      profileVisits: 'プロフィールアクセス',
+      follows: 'フォロー数'
     };
 
     const EXAMPLES = {
@@ -375,6 +379,8 @@
 
     function buildAnalysis(sns) {
       const views = numberValue('views');
+      const reach = numberValue('reach');
+      const impressions = numberValue('impressions');
       const likes = numberValue('likes');
       const replies = numberValue('replies');
       const reposts = numberValue('reposts');
@@ -382,17 +388,25 @@
       const shares = numberValue('shares');
       const bookmarks = numberValue('bookmarks');
       const interactions = numberValue('interactions');
+      const profileVisits = numberValue('profileVisits');
+      const follows = numberValue('follows');
+
+      // Instagram: リーチ優先、なければインプレッション、なければviews
+      // X: views（インプレッション）をそのまま使用
+      const effectiveViews = sns === 'Instagram'
+        ? (reach > 0 ? reach : impressions > 0 ? impressions : views)
+        : views;
 
       // 概要画面スクショの場合: 個別値がなくインタラクション合計だけ取れるケースに対応
       const hasIndividual = (likes + replies + reposts + quotes + shares + bookmarks) > 0;
       const reactionBase = hasIndividual
         ? likes + replies + reposts + quotes + shares + bookmarks
         : interactions;
-      const engagementRate = views > 0 ? (reactionBase / views) * 100 : 0;
+      const engagementRate = effectiveViews > 0 ? (reactionBase / effectiveViews) * 100 : 0;
 
       // ── 概要画面モード（個別値なし）──────────────────────────────
-      if (!hasIndividual && (views > 0 || interactions > 0)) {
-        const followRate = views > 0 ? (follows / views) * 100 : 0;
+      if (!hasIndividual && (effectiveViews > 0 || interactions > 0)) {
+        const followRate = effectiveViews > 0 ? (follows / effectiveViews) * 100 : 0;
         const erState = engagementRate >= 3 ? 'good' : engagementRate >= 1 ? 'mid' : 'low';
         const followState = followRate >= 0.1 ? 'good' : followRate >= 0.03 ? 'mid' : 'low';
 
