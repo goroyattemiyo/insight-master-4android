@@ -232,6 +232,10 @@
 
     <div id="resultSection" style="display:none; display:flex; flex-direction:column; gap:18px;">
       <div class="card">
+      <div id="imageCard" class="card" style="display:none;">
+        <div class="eyebrow">使用したスクショ</div>
+        <div id="imageStrip" class="image-strip"></div>
+      </div>
         <div class="eyebrow">ANALYSIS RESULT</div>
         <div id="snsBadge" class="sns-badge"></div>
         <div class="summary-card">
@@ -285,7 +289,7 @@
       likes: 'いいね', replies: '返信', reposts: 'リポスト',
       quotes: '引用', shares: 'シェア', bookmarks: '保存',
       interactions: 'インタラクション', follows: 'フォロワー',
-        linkClicks: 'リンク'
+      profileVisits: 'プロフィール', linkClicks: 'リンク'
     };
     const METRIC_PRIORITY = ['views','reach','impressions','interactions','likes','replies','reposts','shares','bookmarks','quotes','follows','profileVisits','linkClicks'];
 
@@ -304,7 +308,6 @@
       document.getElementById('snsBadge').textContent = sns;
       document.getElementById('summary').textContent = data.analysis?.summary || '分析結果がありません。';
 
-      // 主要数値（nullでない上位6件）
       const metrics = data.metrics || {};
       const entries = METRIC_PRIORITY.filter(k => metrics[k] != null && metrics[k] > 0).slice(0,6).map(k => [k, metrics[k]]);
       document.getElementById('metricGrid').innerHTML = entries.map(([key, val]) => `
@@ -321,7 +324,6 @@
       renderList('weaknesses', data.analysis?.weaknesses);
       renderList('actions', data.analysis?.actions);
 
-      // 履歴保存
       const history = JSON.parse(localStorage.getItem('analysisHistory') || '[]');
       history.unshift({
         id: Date.now(),
@@ -337,20 +339,29 @@
     }
 
     async function analyze() {
-      const base64 = sessionStorage.getItem('pendingImage');
-      const mimeType = sessionStorage.getItem('pendingMime');
+      const imagesJson = sessionStorage.getItem('pendingImages');
       const sns = sessionStorage.getItem('pendingSns');
+      const legacyBase64 = sessionStorage.getItem('pendingImage');
+      const legacyMime = sessionStorage.getItem('pendingMime');
 
-      if (!base64 || !sns) {
+      if ((!imagesJson && !legacyBase64) || !sns) {
         showError('画像またはSNS情報がありません。\nホームに戻ってやり直してください。');
         return;
       }
 
-      const messages = [
-        'AIが画像を解析中です…',
-        '数値を読み取っています…',
-        '分析を生成しています…'
-      ];
+      const images = imagesJson ? JSON.parse(imagesJson) : [{ base64: legacyBase64, mime: legacyMime }];
+
+      // 画像サムネイル表示
+      const imageCard = document.getElementById('imageCard');
+      const imageStrip = document.getElementById('imageStrip');
+      if (imageCard && imageStrip) {
+        imageStrip.innerHTML = images.map(img =>
+          `<img src="data:${img.mime};base64,${img.base64}" alt="スクショ" />`
+        ).join('');
+        imageCard.style.display = 'block';
+      }
+
+      const messages = ['AIが画像を解析中です…', '数値を読み取っています…', '分析を生成しています…'];
       let i = 0;
       const timer = setInterval(() => {
         i = (i + 1) % messages.length;
@@ -358,10 +369,14 @@
       }, 1800);
 
       try {
+        const body = images.length === 1
+          ? { imageBase64: images[0].base64, mimeType: images[0].mime, sns }
+          : { imagesBase64: images.map(img => img.base64), mimeTypes: images.map(img => img.mime), sns };
+
         const res = await fetch('/api/gemini', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ imageBase64: base64, mimeType, sns })
+          body: JSON.stringify(body)
         });
 
         clearInterval(timer);
@@ -375,10 +390,11 @@
         const data = await res.json();
         showResult(data, sns);
 
-        // セッションデータをクリア
+        sessionStorage.removeItem('pendingImages');
+        sessionStorage.removeItem('pendingSns');
+        sessionStorage.removeItem('pendingNames');
         sessionStorage.removeItem('pendingImage');
         sessionStorage.removeItem('pendingMime');
-        sessionStorage.removeItem('pendingSns');
         sessionStorage.removeItem('pendingName');
 
       } catch (e) {
