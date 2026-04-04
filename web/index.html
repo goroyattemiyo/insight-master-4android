@@ -297,18 +297,12 @@
 
     <section class="card">
       <h2 class="card-title">2. スクショを選択</h2>
-      <input id="fileInput" type="file" accept="image/png,image/jpeg,image/jpg" hidden />
-      <button id="pickButton" class="secondary-button" type="button">画像を選択する</button>
-      <div id="preview" class="preview">
-        <img id="previewImage" alt="プレビュー" />
-        <div>
-          <div id="previewName" class="preview-name"></div>
-          <div id="previewInfo" class="preview-info"></div>
-        </div>
-      </div>
+      <div id="guideBox" class="guide-box" style="display:none;"></div>
+      <input id="fileInput" type="file" accept="image/png,image/jpeg,image/jpg" multiple hidden />
+      <button id="pickButton" class="secondary-button" type="button">画像を選択する（最大3枚）</button>
+      <div id="fileList" class="file-list"></div>
       <div id="pickStatus" class="status"></div>
     </section>
-
     <section class="card">
       <button id="analyzeButton" class="primary-button" type="button" disabled>AIで分析する</button>
       <div class="helper" style="text-align:center;">Gemini AIがOCR・数値抽出・分析を一括で行います</div>
@@ -320,20 +314,23 @@
     <a class="nav-item" href="./history.html">履歴</a>
     <a class="nav-item" href="./settings.html">設定</a>
   </nav>
-
   <script>
     const fileInput = document.getElementById('fileInput');
     const pickButton = document.getElementById('pickButton');
-    const preview = document.getElementById('preview');
-    const previewImage = document.getElementById('previewImage');
-    const previewName = document.getElementById('previewName');
-    const previewInfo = document.getElementById('previewInfo');
     const pickStatus = document.getElementById('pickStatus');
     const analyzeButton = document.getElementById('analyzeButton');
+    const fileList = document.getElementById('fileList');
+    const guideBox = document.getElementById('guideBox');
     const snsOptions = Array.from(document.querySelectorAll('.sns-option'));
 
     let selectedSns = '';
-    let selectedFile = null;
+    let selectedFiles = [];
+
+    const GUIDES = {
+      Threads: '<strong>📸 おすすめのスクショ画面</strong>投稿をタップ → 右上の「…」→「インサイトを見る」の画面。アカウント概要画面も追加すると分析精度が上がります。',
+      Instagram: '<strong>📸 おすすめのスクショ画面</strong>投稿をタップ →「インサイトを見る」の画面。リーチ・シェア・保存数が表示される画面が最適です。',
+      X: '<strong>📸 おすすめのスクショ画面</strong>ポストをタップ → 下部のグラフアイコンをタップした「ポストアナリティクス」画面。※詳細表示はXプレミアム（有料）が必要です。'
+    };
 
     function formatBytes(b) {
       if (b < 1024) return b + ' B';
@@ -342,7 +339,35 @@
     }
 
     function updateAnalyzeButton() {
-      analyzeButton.disabled = !(selectedSns && selectedFile);
+      analyzeButton.disabled = !(selectedSns && selectedFiles.length > 0);
+    }
+
+    function renderFileList() {
+      fileList.innerHTML = selectedFiles.map((f, i) => `
+        <div class="file-item">
+          <span class="file-item-name">${f.name}</span>
+          <span style="font-size:11px;color:var(--muted);">${formatBytes(f.size)}</span>
+          <button class="file-item-remove" data-index="${i}" type="button">✕</button>
+        </div>
+      `).join('');
+      fileList.querySelectorAll('.file-item-remove').forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedFiles.splice(Number(btn.dataset.index), 1);
+          renderFileList();
+          updateStatus();
+          updateAnalyzeButton();
+        });
+      });
+    }
+
+    function updateStatus() {
+      if (selectedFiles.length === 0) {
+        pickStatus.textContent = '';
+        pickStatus.className = 'status';
+      } else {
+        pickStatus.textContent = selectedFiles.length + '枚選択済み。';
+        pickStatus.className = 'status ok';
+      }
     }
 
     snsOptions.forEach(opt => {
@@ -350,6 +375,8 @@
         snsOptions.forEach(o => o.classList.remove('selected'));
         opt.classList.add('selected');
         selectedSns = opt.dataset.sns;
+        guideBox.innerHTML = GUIDES[selectedSns] || '';
+        guideBox.style.display = 'block';
         updateAnalyzeButton();
       });
     });
@@ -357,37 +384,39 @@
     pickButton.addEventListener('click', () => fileInput.click());
 
     fileInput.addEventListener('change', (e) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      if (!['image/png','image/jpeg','image/jpg'].includes(file.type)) {
+      const files = Array.from(e.target.files || []);
+      const valid = files.filter(f => ['image/png','image/jpeg','image/jpg'].includes(f.type));
+      if (valid.length !== files.length) {
         pickStatus.textContent = 'PNG / JPG のみ対応です。';
         pickStatus.className = 'status error';
-        return;
       }
-      selectedFile = file;
-      previewImage.src = URL.createObjectURL(file);
-      previewName.textContent = file.name;
-      previewInfo.textContent = `${file.type.replace('image/','').toUpperCase()} · ${formatBytes(file.size)}`;
-      preview.classList.add('active');
-      pickStatus.textContent = '画像を選択しました。';
-      pickStatus.className = 'status ok';
+      const remaining = 3 - selectedFiles.length;
+      const toAdd = valid.slice(0, remaining);
+      selectedFiles = [...selectedFiles, ...toAdd];
+      if (selectedFiles.length >= 3) {
+        pickStatus.textContent = '最大3枚まで選択できます。';
+        pickStatus.className = 'status warn';
+      }
+      renderFileList();
+      updateStatus();
       updateAnalyzeButton();
+      fileInput.value = '';
     });
 
     analyzeButton.addEventListener('click', () => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const dataUrl = e.target.result;
-        const base64 = dataUrl.split(',')[1];
-        const mimeType = selectedFile.type;
-        sessionStorage.setItem('pendingImage', base64);
-        sessionStorage.setItem('pendingMime', mimeType);
+      const readers = selectedFiles.map(file => new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = e => resolve({ base64: e.target.result.split(',')[1], mime: file.type, name: file.name });
+        reader.readAsDataURL(file);
+      }));
+      Promise.all(readers).then(results => {
+        sessionStorage.setItem('pendingImages', JSON.stringify(results.map(r => ({ base64: r.base64, mime: r.mime }))));
         sessionStorage.setItem('pendingSns', selectedSns);
-        sessionStorage.setItem('pendingName', selectedFile.name);
+        sessionStorage.setItem('pendingNames', JSON.stringify(results.map(r => r.name)));
         window.location.href = './result.html';
-      };
-      reader.readAsDataURL(selectedFile);
+      });
     });
+  </script>
   </script>
 </body>
 </html>
