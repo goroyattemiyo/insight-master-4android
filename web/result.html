@@ -197,6 +197,20 @@
     }
     .nav-item { text-align: center; font-size: 12px; color: var(--muted); font-weight: 700; text-decoration: none; }
     .nav-item.active { color: var(--primary-dark); }
+    .image-strip {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .image-strip img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
     @media (max-width: 400px) {
       .metric-grid { grid-template-columns: repeat(2, 1fr); }
     }

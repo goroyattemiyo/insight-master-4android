@@ -202,6 +202,37 @@
     .status.ok { color: var(--success); }
     .status.error { color: var(--danger); }
     .helper { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .guide-box {
+      background: #f0f5ff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .guide-box strong { color: var(--primary-dark); display: block; margin-bottom: 4px; font-size: 13px; }
+    .file-list { display: flex; flex-direction: column; gap: 8px; }
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f8fbff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+    .file-item-name { flex: 1; font-weight: 700; word-break: break-all; }
+    .file-item-remove {
+      background: none;
+      border: none;
+      color: var(--danger);
+      font-size: 16px;
+      cursor: pointer;
+      padding: 0 4px;
+      width: auto;
+    }
     .bottom-nav {
       position: fixed;
       left: 50%;
@@ -241,7 +272,7 @@
           <div class="sns-icon">＠</div>
           <div>
             <div class="sns-name">Threads</div>
-            <div class="sns-desc">テキスト投稿のインサイト画面向け</div>
+            <div class="sns-desc">投稿インサイト・アカウント概要向け</div>
           </div>
           <div class="radio-mark"></div>
         </button>
