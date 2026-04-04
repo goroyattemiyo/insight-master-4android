@@ -62,3 +62,10 @@
 - 理由: APIコストゼロ・補正はユーザーに見えない裏処理・フォールバック付きで既存動作を保証
 - スコア: 87/100
 - 変更ファイル: api/ocr-correct.js（新規）、web/ocr-extract.html（補正呼び出し追加）
+
+## D-013: 旧OCRフロー廃止・Gemini Vision一本化
+- 日付: 2026-04-04
+- 決定: Tesseract+Gemini補正フロー（sns-select/ocr-extract/analysis-result/ocr-correct.js）を廃止し、Gemini Vision完結フローに一本化
+- 理由: 導線の簡略化・OCR精度の根本解決・保守ファイル数削減
+- スコア: 92/100
+- 削除ファイル: web/sns-select.html, web/ocr-extract.html, web/analysis-result.html, api/ocr-correct.js

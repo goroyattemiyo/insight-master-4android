@@ -36,3 +36,7 @@ MVP設計完了 → 実装準備
 - 1枚スクショ → 分析結果表示
 - 修正 → 再解析
 - 履歴確認可能
+## 完了 2026-04-04
+- 旧OCRフロー（Tesseract+Gemini補正）廃止
+- Gemini Vision一本化（index.html → result.html の2画面構成に統一）
+- 不要ファイル4件削除
