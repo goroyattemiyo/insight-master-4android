@@ -6,252 +6,53 @@
   <title>InsightMasterSnap</title>
   <style>
     :root {
-      --bg: #f5f7fb;
-      --surface: #ffffff;
-      --surface-soft: #eef4ff;
-      --text: #142033;
-      --muted: #61708a;
-      --primary: #2f6bff;
-      --primary-dark: #2157d8;
-      --border: #d9e3f7;
-      --success: #1f9d61;
-      --danger: #c53d3d;
-      --shadow: 0 16px 40px rgba(28, 53, 107, 0.12);
-      --radius: 24px;
+      --bg: #f5f7fb; --surface: #ffffff; --surface-soft: #eef4ff;
+      --text: #142033; --muted: #61708a; --primary: #2f6bff;
+      --primary-dark: #2157d8; --border: #d9e3f7;
+      --success: #1f9d61; --danger: #c53d3d;
+      --shadow: 0 16px 40px rgba(28, 53, 107, 0.12); --radius: 24px;
     }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, #f7f9fd 0%, #eef4ff 100%);
-      color: var(--text);
-      min-height: 100vh;
-    }
-    .app {
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      min-height: 100vh;
-      padding: 24px 20px 120px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      font-size: 20px;
-      color: var(--primary-dark);
-      letter-spacing: -0.02em;
-    }
-    .brand-badge {
-      width: 36px;
-      height: 36px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--primary), #7ca4ff);
-      color: white;
-      display: grid;
-      place-items: center;
-      box-shadow: 0 10px 22px rgba(47, 107, 255, 0.28);
-      font-size: 18px;
-    }
-    .hero {
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.7);
-      box-shadow: var(--shadow);
-      border-radius: 32px;
-      padding: 28px 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .eyebrow {
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      color: var(--primary);
-    }
-    h1 {
-      margin: 0;
-      font-size: 30px;
-      line-height: 1.1;
-      letter-spacing: -0.04em;
-    }
-    .lead {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
-    }
-    .card {
-      background: rgba(255,255,255,0.88);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: 0 10px 28px rgba(25, 43, 84, 0.08);
-      border: 1px solid rgba(255,255,255,0.8);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .card-title {
-      margin: 0;
-      font-size: 17px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    .sns-list {
-      display: grid;
-      gap: 10px;
-    }
-    .sns-option {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-align: left;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 14px;
-      cursor: pointer;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-    .sns-option.selected {
-      border-color: var(--primary);
-      box-shadow: 0 8px 24px rgba(47, 107, 255, 0.14);
-      background: #f8fbff;
-    }
-    .sns-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      background: var(--surface-soft);
-      display: grid;
-      place-items: center;
-      font-size: 20px;
-      flex-shrink: 0;
-    }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: linear-gradient(180deg, #f7f9fd 0%, #eef4ff 100%); color: var(--text); min-height: 100vh; }
+    .app { width: 100%; max-width: 480px; margin: 0 auto; min-height: 100vh; padding: 24px 20px 120px; display: flex; flex-direction: column; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; color: var(--primary-dark); letter-spacing: -0.02em; }
+    .brand-badge { width: 36px; height: 36px; border-radius: 14px; background: linear-gradient(135deg, var(--primary), #7ca4ff); color: white; display: grid; place-items: center; box-shadow: 0 10px 22px rgba(47,107,255,0.28); font-size: 18px; }
+    .hero { background: var(--surface); border: 1px solid rgba(255,255,255,0.7); box-shadow: var(--shadow); border-radius: 32px; padding: 28px 22px; display: flex; flex-direction: column; gap: 16px; }
+    .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 0.14em; color: var(--primary); }
+    h1 { margin: 0; font-size: 30px; line-height: 1.1; letter-spacing: -0.04em; }
+    .lead { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .card { background: rgba(255,255,255,0.88); border-radius: var(--radius); padding: 20px; box-shadow: 0 10px 28px rgba(25,43,84,0.08); border: 1px solid rgba(255,255,255,0.8); display: flex; flex-direction: column; gap: 14px; }
+    .card-title { margin: 0; font-size: 17px; font-weight: 800; letter-spacing: -0.02em; }
+    .sns-list { display: grid; gap: 10px; }
+    .sns-option { width: 100%; display: flex; align-items: center; gap: 12px; text-align: left; background: white; border: 1px solid var(--border); border-radius: 18px; padding: 14px; cursor: pointer; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+    .sns-option.selected { border-color: var(--primary); box-shadow: 0 8px 24px rgba(47,107,255,0.14); background: #f8fbff; }
+    .sns-icon { width: 44px; height: 44px; border-radius: 14px; background: var(--surface-soft); display: grid; place-items: center; font-size: 20px; flex-shrink: 0; }
     .sns-name { font-size: 16px; font-weight: 800; }
     .sns-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .radio-mark {
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      border: 2px solid #b9c8ea;
-      margin-left: auto;
-      flex-shrink: 0;
-      position: relative;
-    }
+    .radio-mark { width: 20px; height: 20px; border-radius: 999px; border: 2px solid #b9c8ea; margin-left: auto; flex-shrink: 0; position: relative; }
     .sns-option.selected .radio-mark { border-color: var(--primary); }
-    .sns-option.selected .radio-mark::after {
-      content: "";
-      position: absolute;
-      inset: 3px;
-      border-radius: 999px;
-      background: var(--primary);
-    }
-    .preview {
-      display: none;
-      gap: 12px;
-      align-items: flex-start;
-      padding: 12px;
-      border-radius: 16px;
-      background: #f8fbff;
-      border: 1px solid var(--border);
-    }
-    .preview.active { display: flex; }
-    .preview img {
-      width: 80px;
-      height: 80px;
-      border-radius: 14px;
-      object-fit: cover;
-      border: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    .preview-name { font-size: 13px; font-weight: 800; word-break: break-all; }
-    .preview-info { font-size: 12px; color: var(--muted); margin-top: 4px; }
-    .primary-button {
-      width: 100%;
-      border: none;
-      border-radius: 18px;
-      padding: 17px 20px;
-      background: linear-gradient(135deg, var(--primary) 0%, #4d86ff 100%);
-      color: white;
-      font-size: 17px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 16px 28px rgba(47, 107, 255, 0.26);
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
-    }
+    .sns-option.selected .radio-mark::after { content: ""; position: absolute; inset: 3px; border-radius: 999px; background: var(--primary); }
+    .primary-button { width: 100%; border: none; border-radius: 18px; padding: 17px 20px; background: linear-gradient(135deg, var(--primary) 0%, #4d86ff 100%); color: white; font-size: 17px; font-weight: 800; cursor: pointer; box-shadow: 0 16px 28px rgba(47,107,255,0.26); transition: transform 0.12s ease, box-shadow 0.12s ease; }
     .primary-button:active { transform: translateY(1px); }
     .primary-button:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
-    .secondary-button {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 15px 18px;
-      background: white;
-      color: var(--primary-dark);
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-    }
+    .secondary-button { width: 100%; border: 1px solid var(--border); border-radius: 18px; padding: 15px 18px; background: white; color: var(--primary-dark); font-size: 15px; font-weight: 800; cursor: pointer; }
     .status { font-size: 13px; font-weight: 700; min-height: 18px; }
     .status.ok { color: var(--success); }
     .status.error { color: var(--danger); }
     .helper { font-size: 12px; color: var(--muted); line-height: 1.6; }
-    .guide-box {
-      background: #f0f5ff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px 16px;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-    .guide-box strong { color: var(--primary-dark); display: block; margin-bottom: 4px; font-size: 13px; }
-    .guide-metrics { margin-top: 12px; padding: 12px 14px; background: #fff; border: 1px solid var(--border); border-radius: 14px; }
+    .guide-box { background: #f0f5ff; border: 1px solid var(--border); border-radius: 16px; padding: 0; font-size: 13px; color: var(--muted); line-height: 1.7; overflow: hidden; }
+    .guide-metrics { padding: 12px 14px; background: #fff; border-top: 1px solid var(--border); }
     .guide-metrics-label { font-size: 12px; font-weight: 800; color: var(--primary-dark); display: block; margin-bottom: 8px; }
     .guide-metrics-chips { display: flex; flex-wrap: wrap; gap: 6px; }
     .guide-metric-chip { font-size: 12px; font-weight: 700; color: var(--primary-dark); background: var(--surface-soft); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; }
+    .guide-text { padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; }
+    .guide-step { font-size: 12px; color: var(--primary-dark); font-weight: 700; }
+    .guide-warn { font-size: 12px; color: #c53d3d; font-weight: 700; }
     .file-list { display: flex; flex-direction: column; gap: 8px; }
-    .file-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #f8fbff;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 8px 12px;
-      font-size: 13px;
-    }
+    .file-item { display: flex; align-items: center; gap: 10px; background: #f8fbff; border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; font-size: 13px; }
     .file-item-name { flex: 1; font-weight: 700; word-break: break-all; }
-    .file-item-remove {
-      background: none;
-      border: none;
-      color: var(--danger);
-      font-size: 16px;
-      cursor: pointer;
-      padding: 0 4px;
-      width: auto;
-    }
-    .bottom-nav {
-      position: fixed;
-      left: 50%;
-      bottom: 14px;
-      transform: translateX(-50%);
-      width: min(440px, calc(100vw - 20px));
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(14px);
-      border-radius: 28px;
-      padding: 10px 18px;
-      display: flex;
-      justify-content: space-around;
-      box-shadow: 0 12px 30px rgba(23, 41, 80, 0.12);
-      border: 1px solid rgba(255,255,255,0.8);
-    }
+    .file-item-remove { background: none; border: none; color: var(--danger); font-size: 16px; cursor: pointer; padding: 0 4px; width: auto; }
+    .bottom-nav { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); width: min(440px, calc(100vw - 20px)); background: rgba(255,255,255,0.92); backdrop-filter: blur(14px); border-radius: 28px; padding: 10px 18px; display: flex; justify-content: space-around; box-shadow: 0 12px 30px rgba(23,41,80,0.12); border: 1px solid rgba(255,255,255,0.8); }
     .nav-item { text-align: center; font-size: 12px; color: var(--muted); font-weight: 700; text-decoration: none; }
     .nav-item.active { color: var(--primary-dark); }
   </style>
@@ -274,26 +75,17 @@
       <div class="sns-list" id="snsList">
         <button class="sns-option" type="button" data-sns="Threads">
           <div class="sns-icon">＠</div>
-          <div>
-            <div class="sns-name">Threads</div>
-            <div class="sns-desc">投稿インサイト・アカウント概要向け</div>
-          </div>
+          <div><div class="sns-name">Threads</div><div class="sns-desc">投稿インサイト・アカウント概要向け</div></div>
           <div class="radio-mark"></div>
         </button>
         <button class="sns-option" type="button" data-sns="Instagram">
           <div class="sns-icon">◉</div>
-          <div>
-            <div class="sns-name">Instagram</div>
-            <div class="sns-desc">投稿・リール・アカウント概要向け</div>
-          </div>
+          <div><div class="sns-name">Instagram</div><div class="sns-desc">投稿・リール・アカウント概要向け</div></div>
           <div class="radio-mark"></div>
         </button>
         <button class="sns-option" type="button" data-sns="X">
           <div class="sns-icon">𝕏</div>
-          <div>
-            <div class="sns-name">X</div>
-            <div class="sns-desc">ポスト・アカウント分析向け</div>
-          </div>
+          <div><div class="sns-name">X</div><div class="sns-desc">ポスト・アカウント分析向け</div></div>
           <div class="radio-mark"></div>
         </button>
       </div>
@@ -307,6 +99,7 @@
       <div id="fileList" class="file-list"></div>
       <div id="pickStatus" class="status"></div>
     </section>
+
     <section class="card">
       <button id="analyzeButton" class="primary-button" type="button" disabled>AIで分析する</button>
       <div class="helper" style="text-align:center;">Gemini AIがOCR・数値抽出・分析を一括で行います</div>
@@ -318,6 +111,7 @@
     <a class="nav-item" href="./history.html">履歴</a>
     <a class="nav-item" href="./settings.html">設定</a>
   </nav>
+
   <script>
     const fileInput = document.getElementById('fileInput');
     const pickButton = document.getElementById('pickButton');
@@ -330,11 +124,35 @@
     let selectedSns = '';
     let selectedFiles = [];
 
-    const GUIDES = {
-      Threads: '<strong>📸 おすすめのスクショ画面</strong>投稿をタップ → 右上の「…」→「インサイトを見る」の画面。アカウント概要画面も追加すると分析精度が上がります。',
-      Instagram: '<strong>📸 おすすめのスクショ画面</strong>投稿をタップ →「インサイトを見る」の画面。リーチ・シェア・保存数が表示される画面が最適です。',
-      X: '<strong>📸 おすすめのスクショ画面</strong>ポストをタップ → 下部のグラフアイコンをタップした「ポストアナリティクス」画面。※詳細表示はXプレミアム（有料）が必要です。'
+    const REQUIRED_METRICS = {
+      Threads:   ['閲覧数', 'いいね', '返信', 'リポスト'],
+      Instagram: ['閲覧数（Views）', 'シェア', '保存'],
+      X:         ['インプレッション', 'いいね', 'リポスト', 'ブックマーク']
     };
+
+    const GUIDE_SVG = {
+      Threads: '<svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;"><rect width="300" height="260" fill="#f0f4ff"/><text x="150" y="18" text-anchor="middle" font-size="10" fill="#61708a">この画面のスクショを撮ってください</text><rect x="65" y="26" width="170" height="225" rx="16" fill="#fff" stroke="#b0c0e8" stroke-width="2"/><rect x="65" y="26" width="170" height="36" rx="16" fill="#f5f7fb"/><rect x="65" y="50" width="170" height="12" fill="#f5f7fb"/><text x="150" y="49" text-anchor="middle" font-size="10" font-weight="bold" fill="#142033">インサイト</text><rect x="75" y="70" width="150" height="42" rx="8" fill="#eef4ff" stroke="#d9e3f7" stroke-width="1"/><text x="83" y="84" font-size="8" fill="#61708a">ビュー数（閲覧）</text><rect x="83" y="88" width="60" height="7" rx="3" fill="#2f6bff" opacity="0.3"/><text x="83" y="104" font-size="8" fill="#61708a">インタラクション合計</text><rect x="83" y="108" width="45" height="7" rx="3" fill="#2f6bff" opacity="0.3"/><rect x="75" y="120" width="150" height="36" rx="8" fill="#f8fbff" stroke="#d9e3f7" stroke-width="1"/><text x="83" y="133" font-size="8" fill="#61708a">いいね　返信　リポスト　引用</text><rect x="83" y="137" width="20" height="6" rx="2" fill="#d9e3f7"/><rect x="107" y="137" width="20" height="6" rx="2" fill="#d9e3f7"/><rect x="131" y="137" width="20" height="6" rx="2" fill="#d9e3f7"/><rect x="155" y="137" width="20" height="6" rx="2" fill="#d9e3f7"/><rect x="75" y="165" width="150" height="22" rx="6" fill="#eef4ff" stroke="#d9e3f7" stroke-width="1"/><text x="150" y="179" text-anchor="middle" font-size="8" fill="#61708a">フォロワー数の推移</text><rect x="75" y="195" width="150" height="22" rx="6" fill="#eef4ff" stroke="#d9e3f7" stroke-width="1"/><text x="150" y="209" text-anchor="middle" font-size="8" fill="#61708a">閲覧のソース</text></svg>',
+      Instagram: '<svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;"><rect width="300" height="260" fill="#f0f4ff"/><text x="150" y="18" text-anchor="middle" font-size="10" fill="#61708a">この画面のスクショを撮ってください</text><rect x="65" y="26" width="170" height="225" rx="16" fill="#fff" stroke="#b0c0e8" stroke-width="2"/><rect x="65" y="26" width="170" height="36" rx="16" fill="#f5f7fb"/><rect x="65" y="50" width="170" height="12" fill="#f5f7fb"/><text x="150" y="49" text-anchor="middle" font-size="10" font-weight="bold" fill="#142033">投稿のインサイト</text><rect x="75" y="70" width="150" height="42" rx="8" fill="#eef4ff" stroke="#d9e3f7" stroke-width="1"/><text x="83" y="84" font-size="8" fill="#61708a">閲覧数（Views）</text><rect x="83" y="88" width="60" height="7" rx="3" fill="#2f6bff" opacity="0.3"/><text x="83" y="104" font-size="8" fill="#61708a">リーチしたアカウント数</text><rect x="83" y="108" width="50" height="7" rx="3" fill="#2f6bff" opacity="0.3"/><rect x="75" y="120" width="150" height="36" rx="8" fill="#f8fbff" stroke="#d9e3f7" stroke-width="1"/><text x="83" y="133" font-size="8" fill="#61708a">いいね　コメント　シェア　保存</text><rect x="83" y="137" width="20" height="6" rx="2" fill="#d9e3f7"/><rect x="107" y="137" width="20" height="6" rx="2" fill="#d9e3f7"/><rect x="131" y="137" width="20" height="6" rx="2" fill="#d9e3f7"/><rect x="155" y="137" width="20" height="6" rx="2" fill="#d9e3f7"/><rect x="75" y="165" width="150" height="22" rx="6" fill="#eef4ff" stroke="#d9e3f7" stroke-width="1"/><text x="150" y="179" text-anchor="middle" font-size="8" fill="#61708a">プロフィールへのアクセス数</text><rect x="75" y="195" width="150" height="22" rx="6" fill="#eef4ff" stroke="#d9e3f7" stroke-width="1"/><text x="150" y="209" text-anchor="middle" font-size="8" fill="#61708a">フォロー数</text></svg>',
+      X: '<svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;"><rect width="300" height="260" fill="#f0f4ff"/><text x="150" y="18" text-anchor="middle" font-size="10" fill="#61708a">この画面のスクショを撮ってください</text><rect x="65" y="26" width="170" height="225" rx="16" fill="#fff" stroke="#b0c0e8" stroke-width="2"/><rect x="65" y="26" width="170" height="36" rx="16" fill="#f5f7fb"/><rect x="65" y="50" width="170" height="12" fill="#f5f7fb"/><text x="150" y="49" text-anchor="middle" font-size="10" font-weight="bold" fill="#142033">ポストアクティビティ</text><rect x="75" y="70" width="150" height="42" rx="8" fill="#eef4ff" stroke="#d9e3f7" stroke-width="1"/><text x="83" y="84" font-size="8" fill="#61708a">インプレッション（表示回数）</text><rect x="83" y="88" width="65" height="7" rx="3" fill="#2f6bff" opacity="0.3"/><text x="83" y="104" font-size="8" fill="#61708a">エンゲージメント合計</text><rect x="83" y="108" width="45" height="7" rx="3" fill="#2f6bff" opacity="0.3"/><rect x="75" y="120" width="150" height="36" rx="8" fill="#f8fbff" stroke="#d9e3f7" stroke-width="1"/><text x="83" y="133" font-size="8" fill="#61708a">いいね　リポスト　返信　ブックマーク</text><rect x="83" y="137" width="18" height="6" rx="2" fill="#d9e3f7"/><rect x="105" y="137" width="18" height="6" rx="2" fill="#d9e3f7"/><rect x="127" y="137" width="18" height="6" rx="2" fill="#d9e3f7"/><rect x="149" y="137" width="26" height="6" rx="2" fill="#d9e3f7"/><rect x="75" y="165" width="150" height="22" rx="6" fill="#eef4ff" stroke="#d9e3f7" stroke-width="1"/><text x="150" y="179" text-anchor="middle" font-size="8" fill="#61708a">プロフィールへのアクセス数</text><rect x="75" y="195" width="150" height="22" rx="6" fill="#eef4ff" stroke="#d9e3f7" stroke-width="1"/><text x="150" y="209" text-anchor="middle" font-size="8" fill="#61708a">リンククリック数</text></svg>'
+    };
+
+    const GUIDE_TEXT = {
+      Threads:   { steps: ['プロフィール左上のグラフアイコン → インサイト', 'または投稿右下のグラフアイコンをタップ'], warn: 'トップコンテンツ一覧・ツリー投稿は非対応' },
+      Instagram: { steps: ['投稿を開く → 左下「インサイトを見る」をタップ', 'シェア・保存が多いほどアルゴリズムに評価される'], warn: 'プロアカウントへの切り替えが必要です' },
+      X:         { steps: ['ポストを開く → 右下の棒グラフアイコンをタップ', 'ポップアップ画面全体のスクショを撮ってください'], warn: '詳細データはXプレミアム（有料）が必要な場合あり' }
+    };
+
+    function buildGuide(sns) {
+      const svg = GUIDE_SVG[sns] || '';
+      const text = GUIDE_TEXT[sns];
+      const metrics = REQUIRED_METRICS[sns] || [];
+      const stepsHtml = text ? text.steps.map(s => '<div class="guide-step">✓ ' + s + '</div>').join('') : '';
+      const warnHtml = text ? '<div class="guide-warn">⚠ ' + text.warn + '</div>' : '';
+      const chipsHtml = metrics.map(m => '<span class="guide-metric-chip">' + m + '</span>').join('');
+      return svg +
+        '<div class="guide-text">' + stepsHtml + warnHtml + '</div>' +
+        '<div class="guide-metrics"><span class="guide-metrics-label">📊 この数値が載っている画面を撮ってください</span><div class="guide-metrics-chips">' + chipsHtml + '</div></div>';
+    }
 
     function formatBytes(b) {
       if (b < 1024) return b + ' B';
@@ -352,8 +170,7 @@
           <span class="file-item-name">${f.name}</span>
           <span style="font-size:11px;color:var(--muted);">${formatBytes(f.size)}</span>
           <button class="file-item-remove" data-index="${i}" type="button">✕</button>
-        </div>
-      `).join('');
+        </div>`).join('');
       fileList.querySelectorAll('.file-item-remove').forEach(btn => {
         btn.addEventListener('click', () => {
           selectedFiles.splice(Number(btn.dataset.index), 1);
@@ -379,11 +196,7 @@
         snsOptions.forEach(o => o.classList.remove('selected'));
         opt.classList.add('selected');
         selectedSns = opt.dataset.sns;
-        const metrics = REQUIRED_METRICS[selectedSns] || [];
-        const chipsHtml = '<div class="guide-metrics"><span class="guide-metrics-label">📊 この数値が載っている画面を撮ってください</span><div class="guide-metrics-chips">' +
-          metrics.map(m => '<span class="guide-metric-chip">' + m + '</span>').join('') +
-          '</div></div>';
-        guideBox.innerHTML = (GUIDES[selectedSns] || '') + chipsHtml;
+        guideBox.innerHTML = buildGuide(selectedSns);
         guideBox.style.display = 'block';
         updateAnalyzeButton();
       });
@@ -424,7 +237,6 @@
         window.location.href = './result.html';
       });
     });
-  </script>
   </script>
 </body>
 </html>
