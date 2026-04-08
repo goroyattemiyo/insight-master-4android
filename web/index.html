@@ -212,6 +212,10 @@
       line-height: 1.7;
     }
     .guide-box strong { color: var(--primary-dark); display: block; margin-bottom: 4px; font-size: 13px; }
+    .guide-metrics { margin-top: 12px; padding: 12px 14px; background: #fff; border: 1px solid var(--border); border-radius: 14px; }
+    .guide-metrics-label { font-size: 12px; font-weight: 800; color: var(--primary-dark); display: block; margin-bottom: 8px; }
+    .guide-metrics-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .guide-metric-chip { font-size: 12px; font-weight: 700; color: var(--primary-dark); background: var(--surface-soft); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; }
     .file-list { display: flex; flex-direction: column; gap: 8px; }
     .file-item {
       display: flex;
@@ -375,7 +379,11 @@
         snsOptions.forEach(o => o.classList.remove('selected'));
         opt.classList.add('selected');
         selectedSns = opt.dataset.sns;
-        guideBox.innerHTML = GUIDES[selectedSns] || '';
+        const metrics = REQUIRED_METRICS[selectedSns] || [];
+        const chipsHtml = '<div class="guide-metrics"><span class="guide-metrics-label">📊 この数値が載っている画面を撮ってください</span><div class="guide-metrics-chips">' +
+          metrics.map(m => '<span class="guide-metric-chip">' + m + '</span>').join('') +
+          '</div></div>';
+        guideBox.innerHTML = (GUIDES[selectedSns] || '') + chipsHtml;
         guideBox.style.display = 'block';
         updateAnalyzeButton();
       });

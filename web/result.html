@@ -6,214 +6,55 @@
   <title>分析結果 | InsightMasterSnap</title>
   <style>
     :root {
-      --bg: #f5f7fb;
-      --surface: #ffffff;
-      --surface-soft: #eef4ff;
-      --text: #142033;
-      --muted: #61708a;
-      --primary: #2f6bff;
-      --primary-dark: #2157d8;
-      --border: #d9e3f7;
-      --success: #1f9d61;
-      --danger: #c53d3d;
-      --shadow: 0 16px 40px rgba(28, 53, 107, 0.12);
-      --radius: 24px;
+      --bg: #f5f7fb; --surface: #ffffff; --surface-soft: #eef4ff;
+      --text: #142033; --muted: #61708a; --primary: #2f6bff;
+      --primary-dark: #2157d8; --border: #d9e3f7;
+      --success: #1f9d61; --danger: #c53d3d;
+      --shadow: 0 16px 40px rgba(28, 53, 107, 0.12); --radius: 24px;
     }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, #f7f9fd 0%, #eef4ff 100%);
-      color: var(--text);
-      min-height: 100vh;
-    }
-    .app {
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      min-height: 100vh;
-      padding: 24px 20px 120px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-    .topbar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--primary-dark);
-      font-weight: 800;
-    }
-    .back {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.92);
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      color: var(--primary-dark);
-      text-decoration: none;
-      font-size: 20px;
-    }
-    .card {
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(255,255,255,0.8);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      padding: 20px;
-    }
-    .eyebrow {
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      color: var(--primary);
-      margin-bottom: 8px;
-    }
-    .section-title {
-      margin: 0 0 14px;
-      font-size: 17px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    /* ローディング */
-    .loading-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      padding: 40px 0;
-    }
-    .spinner {
-      width: 48px;
-      height: 48px;
-      border: 4px solid var(--border);
-      border-top-color: var(--primary);
-      border-radius: 50%;
-      animation: spin 0.9s linear infinite;
-    }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: linear-gradient(180deg, #f7f9fd 0%, #eef4ff 100%); color: var(--text); min-height: 100vh; }
+    .app { width: 100%; max-width: 480px; margin: 0 auto; min-height: 100vh; padding: 24px 20px 120px; display: flex; flex-direction: column; gap: 18px; }
+    .topbar { display: flex; align-items: center; gap: 12px; color: var(--primary-dark); font-weight: 800; }
+    .back { width: 42px; height: 42px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,0.92); display: grid; place-items: center; cursor: pointer; color: var(--primary-dark); text-decoration: none; font-size: 20px; }
+    .card { background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.8); border-radius: 28px; box-shadow: var(--shadow); padding: 20px; }
+    .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 0.12em; color: var(--primary); margin-bottom: 8px; }
+    .section-title { margin: 0 0 14px; font-size: 17px; font-weight: 800; letter-spacing: -0.02em; }
+    .loading-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 40px 0; }
+    .spinner { width: 48px; height: 48px; border: 4px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.9s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-text {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--muted);
-    }
-    /* 結果 */
-    .summary-card {
-      background: linear-gradient(135deg, var(--primary) 0%, #4d86ff 100%);
-      border-radius: 24px;
-      padding: 20px;
-      color: white;
-    }
-    .summary-label {
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      opacity: 0.8;
-      margin-bottom: 8px;
-    }
-    .summary-text {
-      font-size: 18px;
-      font-weight: 800;
-      line-height: 1.5;
-      letter-spacing: -0.02em;
-    }
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-    .metric-item {
-      background: #f8fbff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 12px;
-    }
-    .metric-label {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .metric-value {
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    .bullet-list {
-      margin: 0;
-      padding-left: 18px;
-      line-height: 1.9;
-      font-size: 14px;
-      color: var(--text);
-    }
+    .loading-text { font-size: 14px; font-weight: 700; color: var(--muted); }
+    .loading-notice { font-size: 12px; color: var(--muted); text-align: center; background: #fff8e1; border: 1px solid #ffe082; border-radius: 12px; padding: 10px 14px; line-height: 1.6; }
+    .summary-card { background: linear-gradient(135deg, var(--primary) 0%, #4d86ff 100%); border-radius: 24px; padding: 20px; color: white; }
+    .summary-label { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; opacity: 0.8; margin-bottom: 8px; }
+    .summary-text { font-size: 18px; font-weight: 800; line-height: 1.5; letter-spacing: -0.02em; }
+    .based-on-badge { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); border-radius: 999px; padding: 3px 10px; margin: 2px; }
+    .based-on-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.6); padding: 3px 0; align-self: center; }
+    .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .metric-item { background: #f8fbff; border: 1px solid var(--border); border-radius: 16px; padding: 12px; }
+    .metric-label { font-size: 11px; color: var(--muted); font-weight: 700; margin-bottom: 4px; }
+    .metric-value { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+    .action-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .action-item { background: #f8fbff; border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; font-size: 14px; line-height: 1.7; }
+    .action-title { font-weight: 800; color: var(--primary-dark); margin-bottom: 6px; font-size: 14px; }
+    .action-example { font-size: 13px; color: var(--muted); background: white; border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; line-height: 1.6; }
+    .bullet-list { margin: 0; padding-left: 18px; line-height: 1.9; font-size: 14px; color: var(--text); }
     .bullet-list li { margin-bottom: 2px; }
-    .error-wrap {
-      text-align: center;
-      padding: 32px 0;
-      color: var(--danger);
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.7;
-    }
-    .retry-button {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 15px;
-      background: white;
-      color: var(--primary-dark);
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      margin-top: 12px;
-    }
-    .sns-badge {
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--primary-dark);
-      background: var(--surface-soft);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 4px 12px;
-      margin-bottom: 12px;
-    }
-    .bottom-nav {
-      position: fixed;
-      left: 50%;
-      bottom: 14px;
-      transform: translateX(-50%);
-      width: min(440px, calc(100vw - 20px));
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(14px);
-      border-radius: 28px;
-      padding: 10px 18px;
-      display: flex;
-      justify-content: space-around;
-      box-shadow: 0 12px 30px rgba(23, 41, 80, 0.12);
-      border: 1px solid rgba(255,255,255,0.8);
-    }
+    .error-wrap { text-align: center; padding: 24px 0 16px; font-size: 14px; font-weight: 700; line-height: 1.7; color: var(--text); }
+    .retry-button { width: 100%; border: 1px solid var(--border); border-radius: 18px; padding: 15px; background: white; color: var(--primary-dark); font-size: 15px; font-weight: 800; cursor: pointer; margin-top: 12px; }
+    .sns-badge { display: inline-block; font-size: 12px; font-weight: 800; color: var(--primary-dark); background: var(--surface-soft); border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; margin-bottom: 12px; }
+    .bottom-nav { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); width: min(440px, calc(100vw - 20px)); background: rgba(255,255,255,0.92); backdrop-filter: blur(14px); border-radius: 28px; padding: 10px 18px; display: flex; justify-content: space-around; box-shadow: 0 12px 30px rgba(23, 41, 80, 0.12); border: 1px solid rgba(255,255,255,0.8); transition: opacity 0.2s ease; }
+    .bottom-nav.disabled { opacity: 0.35; pointer-events: none; }
     .nav-item { text-align: center; font-size: 12px; color: var(--muted); font-weight: 700; text-decoration: none; }
     .nav-item.active { color: var(--primary-dark); }
-    .image-strip {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-    }
-    .image-strip img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    @media (max-width: 400px) {
-      .metric-grid { grid-template-columns: repeat(2, 1fr); }
-    }
+    .image-strip { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
+    .image-strip img { width: 100px; height: 100px; object-fit: cover; border-radius: 14px; border: 1px solid var(--border); flex-shrink: 0; cursor: zoom-in; transition: opacity 0.15s ease; }
+    .image-strip img:active { opacity: 0.7; }
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 90vh; border-radius: 18px; object-fit: contain; box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
+    .lightbox-close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 999px; background: rgba(255,255,255,0.15); border: none; color: white; font-size: 20px; cursor: pointer; display: grid; place-items: center; }
+    @media (max-width: 400px) { .metric-grid { grid-template-columns: repeat(2, 1fr); } }
   </style>
 </head>
 <body>
@@ -228,25 +69,28 @@
         <div class="spinner"></div>
         <div class="loading-text" id="loadingText">AIが画像を解析中です…</div>
       </div>
+      <div class="loading-notice">⏳ 分析中は他の画面に移動しないでください。<br>移動すると分析がキャンセルされます。</div>
     </div>
 
-    <div id="resultSection" style="display:none; display:flex; flex-direction:column; gap:18px;">
-      <div class="card">
+    <div id="resultSection" style="display:none; flex-direction:column; gap:18px;">
       <div id="imageCard" class="card" style="display:none;">
         <div class="eyebrow">使用したスクショ</div>
         <div id="imageStrip" class="image-strip"></div>
       </div>
+
+      <div class="card">
+        <h2 class="section-title">読み取り数値</h2>
+        <div id="metricGridAll" class="metric-grid"></div>
+      </div>
+
+      <div class="card">
         <div class="eyebrow">ANALYSIS RESULT</div>
         <div id="snsBadge" class="sns-badge"></div>
         <div class="summary-card">
           <div class="summary-label">結論</div>
           <div id="summary" class="summary-text"></div>
+          <div id="analysisBasedOn" style="margin-top:12px; display:flex; flex-wrap:wrap; gap:6px;"></div>
         </div>
-      </div>
-
-      <div class="card">
-        <h2 class="section-title">主要数値</h2>
-        <div id="metricGrid" class="metric-grid"></div>
       </div>
 
       <div class="card">
@@ -261,7 +105,7 @@
 
       <div class="card">
         <h2 class="section-title">次の一手</h2>
-        <ul id="actions" class="bullet-list"></ul>
+        <ul id="actions" class="action-list"></ul>
       </div>
     </div>
 
@@ -271,7 +115,12 @@
     </div>
   </main>
 
-  <nav class="bottom-nav">
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <img id="lightboxImg" src="" alt="拡大表示" />
+  </div>
+
+  <nav class="bottom-nav" id="bottomNav">
     <a class="nav-item" href="./index.html">ホーム</a>
     <a class="nav-item" href="./history.html">履歴</a>
     <a class="nav-item" href="./settings.html">設定</a>
@@ -283,6 +132,7 @@
     const resultSection = document.getElementById('resultSection');
     const errorSection = document.getElementById('errorSection');
     const errorText = document.getElementById('errorText');
+    const bottomNav = document.getElementById('bottomNav');
 
     const METRIC_LABELS = {
       views: '表示回数', reach: 'リーチ', impressions: 'インプレッション',
@@ -291,16 +141,32 @@
       interactions: 'インタラクション', follows: 'フォロワー',
       profileVisits: 'プロフィール', linkClicks: 'リンク'
     };
-    const METRIC_PRIORITY = ['views','reach','impressions','interactions','likes','replies','reposts','shares','bookmarks','quotes','follows','profileVisits','linkClicks'];
 
-    function showError(msg) {
+    const METRIC_PRIORITY_BY_SNS = {
+      Threads:   ['views', 'interactions', 'likes', 'replies', 'reposts', 'quotes', 'follows', 'profileVisits'],
+      Instagram: ['reach', 'views', 'impressions', 'shares', 'bookmarks', 'likes', 'interactions', 'follows', 'profileVisits', 'linkClicks'],
+      X:         ['impressions', 'likes', 'reposts', 'replies', 'bookmarks', 'interactions', 'profileVisits', 'linkClicks', 'follows']
+    };
+    const METRIC_PRIORITY_DEFAULT = ['views','reach','impressions','interactions','likes','replies','reposts','shares','bookmarks','quotes','follows','profileVisits','linkClicks'];
+
+    function setNavDisabled(disabled) {
+      bottomNav.classList.toggle('disabled', disabled);
+    }
+
+    function showError(msg, isHtml = false) {
+      setNavDisabled(false);
       loadingSection.style.display = 'none';
       resultSection.style.display = 'none';
       errorSection.style.display = 'block';
-      errorText.textContent = msg;
+      if (isHtml) {
+        errorText.innerHTML = msg;
+      } else {
+        errorText.textContent = msg;
+      }
     }
 
     function showResult(data, sns) {
+      setNavDisabled(false);
       loadingSection.style.display = 'none';
       errorSection.style.display = 'none';
       resultSection.style.display = 'flex';
@@ -309,30 +175,51 @@
       document.getElementById('summary').textContent = data.analysis?.summary || '分析結果がありません。';
 
       const metrics = data.metrics || {};
-      const entries = METRIC_PRIORITY.filter(k => metrics[k] != null && metrics[k] > 0).slice(0,6).map(k => [k, metrics[k]]);
-      document.getElementById('metricGrid').innerHTML = entries.map(([key, val]) => `
-        <div class="metric-item">
-          <div class="metric-label">${METRIC_LABELS[key] || key}</div>
-          <div class="metric-value">${Number(val).toLocaleString('ja-JP')}</div>
-        </div>
-      `).join('');
+      const priority = METRIC_PRIORITY_BY_SNS[sns] || METRIC_PRIORITY_DEFAULT;
 
-      const renderList = (id, items) => {
+      const allEntries = priority.filter(k => metrics[k] != null && metrics[k] > 0).map(k => [k, metrics[k]]);
+      Object.keys(metrics).forEach(k => {
+        if (metrics[k] != null && metrics[k] > 0 && !priority.includes(k)) allEntries.push([k, metrics[k]]);
+      });
+
+      document.getElementById('metricGridAll').innerHTML = allEntries.length > 0
+        ? allEntries.map(([key, val]) => `
+          <div class="metric-item">
+            <div class="metric-label">${METRIC_LABELS[key] || key}</div>
+            <div class="metric-value">${Number(val).toLocaleString('ja-JP')}</div>
+          </div>`).join('')
+        : '<div style="font-size:13px;color:var(--muted);">数値を読み取れませんでした。</div>';
+
+      const basedOnEntries = priority.filter(k => metrics[k] != null && metrics[k] > 0).slice(0, 3);
+      const basedOnEl = document.getElementById('analysisBasedOn');
+      if (basedOnEntries.length > 0) {
+        basedOnEl.innerHTML = '<span class="based-on-label">分析に使用：</span>' +
+          basedOnEntries.map(k => `<span class="based-on-badge">${METRIC_LABELS[k] || k}</span>`).join('');
+      }
+
+      const renderBullets = (id, items) => {
         document.getElementById(id).innerHTML = (items || []).map(i => `<li>${i}</li>`).join('');
       };
-      renderList('strengths', data.analysis?.strengths);
-      renderList('weaknesses', data.analysis?.weaknesses);
-      renderList('actions', data.analysis?.actions);
+      renderBullets('strengths', data.analysis?.strengths);
+      renderBullets('weaknesses', data.analysis?.weaknesses);
+
+      document.getElementById('actions').innerHTML = (data.analysis?.actions || []).map(i => {
+        const m = i.match(/【アクション】(.+?)。【例文】「(.+?)」/);
+        if (m) return `<li class="action-item"><div class="action-title">✦ ${m[1]}</div><div class="action-example">💬 例：「${m[2]}」</div></li>`;
+        return `<li class="action-item">${i}</li>`;
+      }).join('');
 
       const history = JSON.parse(localStorage.getItem('analysisHistory') || '[]');
+      const viewsVal = metrics.views ?? metrics.reach ?? metrics.impressions ?? null;
+      const likesVal = metrics.likes ?? metrics.interactions ?? null;
       history.unshift({
         id: Date.now(),
         date: new Date().toLocaleString('ja-JP'),
         sns,
         summary: data.analysis?.summary || '',
         engagementRate: '—',
-        views: metrics.views || metrics.reach || metrics.impressions || 0,
-        likes: metrics.likes || metrics.interactions || 0
+        views: viewsVal !== null ? viewsVal : 0,
+        likes: likesVal !== null ? likesVal : 0
       });
       if (history.length > 50) history.pop();
       localStorage.setItem('analysisHistory', JSON.stringify(history));
@@ -351,22 +238,24 @@
 
       const images = imagesJson ? JSON.parse(imagesJson) : [{ base64: legacyBase64, mime: legacyMime }];
 
-      // 画像サムネイル表示
+      setNavDisabled(true);
+
       const imageCard = document.getElementById('imageCard');
       const imageStrip = document.getElementById('imageStrip');
       if (imageCard && imageStrip) {
-        imageStrip.innerHTML = images.map(img =>
-          `<img src="data:${img.mime};base64,${img.base64}" alt="スクショ" />`
-        ).join('');
+        imageStrip.innerHTML = images.map(img => `<img src="data:${img.mime};base64,${img.base64}" alt="スクショ" />`).join('');
+        imageStrip.querySelectorAll('img').forEach(img => {
+          img.addEventListener('click', () => {
+            document.getElementById('lightboxImg').src = img.src;
+            document.getElementById('lightbox').classList.add('open');
+          });
+        });
         imageCard.style.display = 'block';
       }
 
       const messages = ['AIが画像を解析中です…', '数値を読み取っています…', '分析を生成しています…'];
       let i = 0;
-      const timer = setInterval(() => {
-        i = (i + 1) % messages.length;
-        loadingText.textContent = messages[i];
-      }, 1800);
+      const timer = setInterval(() => { i = (i + 1) % messages.length; loadingText.textContent = messages[i]; }, 1800);
 
       try {
         const body = images.length === 1
@@ -388,6 +277,19 @@
         }
 
         const data = await res.json();
+
+        if (data.screenType === 'unsupported') {
+          showError(
+            '<div style="font-size:20px;margin-bottom:12px;">📵</div>' +
+            '<div style="font-size:15px;font-weight:800;color:var(--text);margin-bottom:8px;">この画面では分析できません</div>' +
+            '<div style="font-size:13px;color:var(--muted);font-weight:400;margin-bottom:16px;">' + (data.unsupportedReason || '') + '</div>' +
+            '<div style="background:#e8f0fe;border:1px solid var(--border);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--primary-dark);font-weight:700;text-align:left;">' +
+            '✓ ' + (data.unsupportedGuide || '投稿単体のインサイト画面を撮ってください') + '</div>',
+            true
+          );
+          return;
+        }
+
         showResult(data, sns);
 
         sessionStorage.removeItem('pendingImages');
@@ -402,6 +304,13 @@
         showError('通信エラーが発生しました。\nネットワークを確認してもう一度お試しください。');
       }
     }
+
+    document.getElementById('lightboxClose').addEventListener('click', () => {
+      document.getElementById('lightbox').classList.remove('open');
+    });
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+    });
 
     analyze();
   </script>
